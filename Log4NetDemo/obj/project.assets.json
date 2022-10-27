@@ -344,9 +344,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\Solutions\\Log4NetDemo\\ConsoleApp.csproj",
-      "projectName": "ConsoleApp",
-      "projectPath": "D:\\github\\Solutions\\Log4NetDemo\\ConsoleApp.csproj",
+      "projectUniqueName": "D:\\github\\Solutions\\Log4NetDemo\\Log4NetDemo.csproj",
+      "projectName": "Log4NetDemo",
+      "projectPath": "D:\\github\\Solutions\\Log4NetDemo\\Log4NetDemo.csproj",
       "packagesPath": "C:\\Users\\hao.luo01\\.nuget\\packages\\",
       "outputPath": "D:\\github\\Solutions\\Log4NetDemo\\obj\\",
       "projectStyle": "PackageReference",

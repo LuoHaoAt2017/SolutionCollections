@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j5dndO/p3XA8IqPzrnsaQFh6pzqx0FM0E60bIycaoI1JQ2Xj3wCTtQRtwmiXwHX3RnWIx/xiZm3ZZ4LgR3AHsQ==",
+  "dgSpecHash": "U+7mMgHdm+UJvxRHh83t6O7rURwWO0BaPScXdYkximQlHqsC9XoyD60kYDLy/IyPF2WvJBXORny//DakYyYCVg==",
   "success": true,
-  "projectFilePath": "D:\\github\\Solutions\\Log4NetDemo\\ConsoleApp.csproj",
+  "projectFilePath": "D:\\github\\Solutions\\Log4NetDemo\\Log4NetDemo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hao.luo01\\.nuget\\packages\\log4net\\2.0.15\\log4net.2.0.15.nupkg.sha512",
     "C:\\Users\\hao.luo01\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
