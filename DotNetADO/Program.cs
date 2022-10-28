@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using System.Collections.Generic;
 
 // DataSet 类基本上是内存中的数据库，包含了所有表，关系，约束。
 // DataSet 和相关的类已经被 Entity Framework 代替。
@@ -28,7 +30,10 @@ namespace DotNetADO
 				{
 					conn.Open();
 					LogHelper.Log("数据库连接成功");
-					TestStoredProcedure(conn);
+					// TestSelectStoredProcedure(conn);
+					// TestInsertStoredProcedure(conn);
+					// TestUpdateStoredProcedure(conn);
+					// TestDeleteStoredProcedure(conn);
 					conn.Close();
 					LogHelper.Log("数据库连接断开");
 				}
@@ -165,8 +170,12 @@ namespace DotNetADO
 			products.Constraints.Add(fk);
 		}
 
-		public static void TestStoredProcedure(SqlConnection conn)
+		public static void TestSelectStoredProcedure(SqlConnection conn)
 		{
+			//CREATE PROCEDURE RegionSelect AS
+			//	SET NOCOUNT OFF
+			//	SELECT* FROM Region
+			//GO
 			SqlCommand cmd = new SqlCommand("RegionSelect", conn);
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.UpdatedRowSource = UpdateRowSource.None;
@@ -178,6 +187,64 @@ namespace DotNetADO
 			{
 				LogHelper.Log($"{row[0]} from {row[1]}");
 			}
+		}
+
+		public static void TestInsertStoredProcedure(SqlConnection conn)
+		{
+			//CREATE PROCEDURE RegionInsert(@RegionID INTEGER, @RegionDescription NCHAR(50))
+			//	AS SET NOCOUNT OFF
+			//	SELECT @RegionID = MAX(RegionID) + 1 FROM Region
+			//	INSERT INTO Region(RegionID, RegionDescription)
+			//	VALUES(@RegionID, @RegionDescription)
+			//GO
+			SqlCommand cmd = new SqlCommand("RegionInsert", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.Parameters.Add(new SqlParameter("@RegionDescription", SqlDbType.NChar, 50, "RegionDescription"));
+			cmd.Parameters.Add(new SqlParameter("@RegionID", SqlDbType.Int, 5, "RegionID"));
+			cmd.UpdatedRowSource = UpdateRowSource.OutputParameters;
+			cmd.Parameters["@RegionDescription"].Value = "South East";
+			cmd.Parameters["@RegionID"].Value = 5;
+			cmd.ExecuteNonQuery();
+		}
+
+		public static void TestUpdateStoredProcedure(SqlConnection conn)
+		{
+			//CREATE PROCEDURE RegionUpdate(@RegionID INTEGER, @RegionDescription NCHAR(50))
+			//	AS SET NOCOUNT OFF
+			//	UPDATE Region
+			//	SET RegionDescription = @RegionDescription WHERE RegionID = @RegionID
+			//GO
+			SqlCommand cmd = new SqlCommand("RegionUpdate", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.Parameters.AddWithValue("@RegionID", 7);
+			cmd.Parameters.AddWithValue("@RegionDescription", "WestNorth");
+			cmd.ExecuteNonQuery();
+		}
+
+		public static void TestDeleteStoredProcedure(SqlConnection conn)
+		{
+			//CREATE PROCEDURE RegionDelete(@RegionID INTEGER)
+			//	AS SET NOCOUNT OFF
+			//	DELETE FROM Region WHERE RegionID = @RegionID
+			//GO
+			SqlCommand cmd = new SqlCommand("RegionDelete", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.UpdatedRowSource = UpdateRowSource.None;
+			cmd.Parameters.Add(new SqlParameter("@RegionID", SqlDbType.Int, 0, "RegionID"));
+			cmd.Parameters["@RegionID"].Value = 6;
+			cmd.ExecuteNonQuery();
+		}
+
+		public static void WriteDatasetToXML()
+		{
+			// SelectCommand
+			// InsertCommand
+			// DeleteCommand
+			// UpdateCommand
+
+			// 对频繁使用的命令采用存储过程来执行
+			// 对不常用的命令直接用SQL命令来执行
+			DataSet ds = new DataSet();			
 		}
 	}
 }
