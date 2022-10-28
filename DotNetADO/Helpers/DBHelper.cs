@@ -10,7 +10,7 @@ namespace DotNetADO.Helpers
 {
 	internal class DBHelper
 	{
-		public DbConnection GetDBConnection(string name)
+		public static DbConnection GetDBConnection(string name)
 		{
 			// 读取 App.config 中的 Northwind 配置项
 			ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings[name];

@@ -2,6 +2,9 @@
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
+using DotNetADO.Helpers;
+using System.Threading.Tasks;
 
 // DataSet 类基本上是内存中的数据库，包含了所有表，关系，约束。
 // DataSet 和相关的类已经被 Entity Framework 代替。
@@ -23,7 +26,8 @@ namespace DotNetADO
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			TestNorthWind();
+			//TestNorthWind();
+			//TestAsyncTask();
 			Application.Run(new MainForm());
 		}
 
@@ -285,6 +289,43 @@ namespace DotNetADO
 			adapter.Fill(dataSet, "Region");
 			dataSet.WriteXml(".\\WithoutSchema.xml", XmlWriteMode.IgnoreSchema);
 			dataSet.WriteXml(".\\WithSchema.xml", XmlWriteMode.WriteSchema);
+		}
+
+		public async static void TestAsyncTask()
+		{
+			try
+			{
+				var task1 = await GetCustomerCount();
+				var task2 = await GetEmployeeCount();
+				LogHelper.Log($"task1: {task1}");
+				LogHelper.Log($"task2: {task2}");
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public async static Task<int> GetCustomerCount()
+		{
+			using (SqlConnection conn = (SqlConnection)DBHelper.GetDBConnection("Northwind"))
+			{
+				conn.Open();
+				string sql = "WAITFOR DELAY '0:0:02'; SELECT COUNT(*) FROM Customers";
+				SqlCommand cmd = new SqlCommand(sql, conn);
+				return await cmd.ExecuteScalarAsync().ContinueWith(t => Convert.ToInt32(t.Result));
+			}
+		}
+
+		public async static Task<int> GetEmployeeCount()
+		{
+			using (SqlConnection conn = (SqlConnection)DBHelper.GetDBConnection("Northwind"))
+			{
+				conn.Open();
+				string sql = "WAITFOR DELAY '0:0:03'; SELECT COUNT(*) FROM Employees";
+				SqlCommand cmd = new SqlCommand(sql, conn);
+				return await cmd.ExecuteScalarAsync().ContinueWith(t => Convert.ToInt32(t.Result));
+			}
 		}
 	}
 }
