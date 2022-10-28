@@ -2,8 +2,6 @@
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
-using System.Drawing;
-using System.Collections.Generic;
 
 // DataSet 类基本上是内存中的数据库，包含了所有表，关系，约束。
 // DataSet 和相关的类已经被 Entity Framework 代替。
@@ -42,15 +40,47 @@ namespace DotNetADO
 					// TestInsertStoredProcedure(conn);
 					// TestUpdateStoredProcedure(conn);
 					// TestDeleteStoredProcedure(conn);
-					WriteDatasetToXMLFile(conn);
+					// TestWriteDatasetToXMLFile(conn);
+					// TestExecuteNonQueryCommand(conn);
+					// TestExecuteReaderCommand(conn);
+					// TestExecuteScalarCommand(conn);
 					conn.Close();
 					LogHelper.Log("数据库连接断开");
 				}
 			}
 			catch(SqlException e)
 			{
+				LogHelper.Error(e.Message);
 				throw new Exception(e.Message);
 			}
+		}
+
+		public static void TestExecuteNonQueryCommand(SqlConnection conn)
+		{
+			string sql = "UPDATE Customers SET ContactName = 'Bob' WHERE ContactName = 'Bill'";
+			SqlCommand cmd = new SqlCommand(sql, conn);
+			// 一般用于 UPDATE, INSERT, DELETE 语句
+			int rowCount =  cmd.ExecuteNonQuery();
+			LogHelper.Log($"{rowCount} rows returned");
+		}
+
+		public static void TestExecuteReaderCommand(SqlConnection conn)
+		{
+			string sql = "SELECT ContactName, CompanyName FROM Customers";
+			SqlCommand cmd = new SqlCommand(sql, conn);
+			SqlDataReader reader = cmd.ExecuteReader();
+			while (reader.Read())
+			{
+				LogHelper.Log($"Contact: {reader[0]} Company: {reader[1]}");
+			}
+		}
+
+		public static void TestExecuteScalarCommand(SqlConnection conn)
+		{
+			string sql = "SELECT COUNT(*) FROM Customers";
+			SqlCommand cmd = new SqlCommand(sql, conn);
+			object obj = cmd.ExecuteScalar();
+			Console.WriteLine(obj); // 返回表中的记录个数
 		}
 
 		public static void ManufactureCustomerDataTable(SqlConnection conn)
@@ -244,7 +274,7 @@ namespace DotNetADO
 			cmd.ExecuteNonQuery();
 		}
 
-		public static void WriteDatasetToXMLFile(SqlConnection conn)
+		public static void TestWriteDatasetToXMLFile(SqlConnection conn)
 		{
 			SqlCommand cmd = new SqlCommand("RegionSelect", conn);
 			cmd.CommandType = CommandType.StoredProcedure;
