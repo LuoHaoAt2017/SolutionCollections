@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
-using System.Data.Common;
 using DotNetADO.Helpers;
 using System.Threading.Tasks;
 
@@ -27,7 +26,7 @@ namespace DotNetADO
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			//TestNorthWind();
-			//TestAsyncTask();
+			TestAsyncTask();
 			Application.Run(new MainForm());
 		}
 

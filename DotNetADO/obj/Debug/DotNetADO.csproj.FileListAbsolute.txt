@@ -1,8 +1,12 @@
+D:\github\Solutions\DotNetADO\bin\Debug\log4net.config
+D:\github\Solutions\DotNetADO\bin\Debug\packages.config
+D:\github\Solutions\DotNetADO\bin\Debug\App.config
 D:\github\Solutions\DotNetADO\bin\Debug\DotNetADO.exe.config
 D:\github\Solutions\DotNetADO\bin\Debug\DotNetADO.exe
 D:\github\Solutions\DotNetADO\bin\Debug\DotNetADO.pdb
 D:\github\Solutions\DotNetADO\bin\Debug\Azure.Core.dll
 D:\github\Solutions\DotNetADO\bin\Debug\Azure.Identity.dll
+D:\github\Solutions\DotNetADO\bin\Debug\log4net.dll
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Data.SqlClient.dll
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Identity.Client.dll
@@ -31,6 +35,7 @@ D:\github\Solutions\DotNetADO\bin\Debug\System.Threading.Tasks.Extensions.dll
 D:\github\Solutions\DotNetADO\bin\Debug\System.ValueTuple.dll
 D:\github\Solutions\DotNetADO\bin\Debug\Azure.Core.xml
 D:\github\Solutions\DotNetADO\bin\Debug\Azure.Identity.xml
+D:\github\Solutions\DotNetADO\bin\Debug\log4net.xml
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Data.SqlClient.pdb
 D:\github\Solutions\DotNetADO\bin\Debug\Microsoft.Data.SqlClient.xml
@@ -76,8 +81,3 @@ D:\github\Solutions\DotNetADO\obj\Debug\DotNetADO.csproj.CoreCompileInputs.cache
 D:\github\Solutions\DotNetADO\obj\Debug\DotNetADO.csproj.CopyComplete
 D:\github\Solutions\DotNetADO\obj\Debug\DotNetADO.exe
 D:\github\Solutions\DotNetADO\obj\Debug\DotNetADO.pdb
-D:\github\Solutions\DotNetADO\bin\Debug\log4net.config
-D:\github\Solutions\DotNetADO\bin\Debug\log4net.dll
-D:\github\Solutions\DotNetADO\bin\Debug\log4net.xml
-D:\github\Solutions\DotNetADO\bin\Debug\App.config
-D:\github\Solutions\DotNetADO\bin\Debug\packages.config
