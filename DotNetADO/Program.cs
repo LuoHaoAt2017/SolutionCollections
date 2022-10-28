@@ -28,7 +28,7 @@ namespace DotNetADO
 				{
 					conn.Open();
 					LogHelper.Log("数据库连接成功");
-					TestRelationshipBetweenTable();
+					TestStoredProcedure(conn);
 					conn.Close();
 					LogHelper.Log("数据库连接断开");
 				}
@@ -163,6 +163,21 @@ namespace DotNetADO
 			fk.UpdateRule = Rule.Cascade;
 			fk.DeleteRule = Rule.SetNull;
 			products.Constraints.Add(fk);
+		}
+
+		public static void TestStoredProcedure(SqlConnection conn)
+		{
+			SqlCommand cmd = new SqlCommand("RegionSelect", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.UpdatedRowSource = UpdateRowSource.None;
+			SqlDataAdapter adapter = new SqlDataAdapter();
+			adapter.SelectCommand = cmd;
+			DataSet dataSet = new DataSet();
+			adapter.Fill(dataSet, "Region"); // 执行语句
+			foreach (DataRow row in dataSet.Tables["Region"].Rows)
+			{
+				LogHelper.Log($"{row[0]} from {row[1]}");
+			}
 		}
 	}
 }
