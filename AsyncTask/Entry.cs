@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AsyncTask
 {
-	public partial class Printer : Form
+	public partial class Entry : Form
 	{
-		public Printer()
+		public Entry()
 		{
 			InitializeComponent();
 		}

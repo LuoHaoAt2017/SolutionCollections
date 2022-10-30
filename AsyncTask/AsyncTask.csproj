@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FBE93791-093B-424D-B8AB-4E20971F602D}</ProjectGuid>
+    <ProjectGuid>{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>AsyncTask</RootNamespace>
     <AssemblyName>AsyncTask</AssemblyName>
@@ -51,11 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Printer.cs">
+    <Compile Include="Entry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Printer.Designer.cs">
-      <DependentUpon>Printer.cs</DependentUpon>
+    <Compile Include="Entry.Designer.cs">
+      <DependentUpon>Entry.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +68,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="log4net.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
