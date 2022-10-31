@@ -1,6 +1,6 @@
-﻿namespace AsyncTask
+﻿namespace ThreadDemo
 {
-	partial class Entry
+	partial class FrmMain
 	{
 		/// <summary>
 		/// 必需的设计器变量。
@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Text = "Form1";
+			this.Text = "核心窗口";
 		}
 
 		#endregion

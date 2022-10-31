@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AsyncTask
+namespace ThreadDemo
 {
-	public partial class Entry : Form
+	public partial class FrmMain : Form
 	{
-		public Entry()
+		public FrmMain()
 		{
 			InitializeComponent();
 		}

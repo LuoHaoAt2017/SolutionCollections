@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Threading;
 using System.Windows.Forms;
 
-namespace AsyncTask
+namespace ThreadDemo
 {
 	internal static class Program
 	{
@@ -16,6 +17,36 @@ namespace AsyncTask
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new FrmMain());
+		}
+
+		public static void TestParallel()
+		{
+
+		}
+
+		public static void TestTask()
+		{
+
+		}
+
+		public static void Cancelllation()
+		{
+
+		}
+
+		public static void TestThreadClass()
+		{
+
+		}
+
+		public static void Synchronization()
+		{
+
+		}
+
+		public static void TestDataFlow()
+		{
+
 		}
 	}
 }
