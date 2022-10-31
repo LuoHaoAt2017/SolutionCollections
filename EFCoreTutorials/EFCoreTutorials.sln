@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncTask", "AsyncTask.csproj", "{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreTutorials", "EFCoreTutorials.csproj", "{C7740DD9-1299-4630-809B-41D8874F3305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FB7E94A-BF85-42EA-94B2-7D3FBCEE4A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7740DD9-1299-4630-809B-41D8874F3305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7740DD9-1299-4630-809B-41D8874F3305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7740DD9-1299-4630-809B-41D8874F3305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7740DD9-1299-4630-809B-41D8874F3305}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C716A28C-4ED8-4485-AC13-AE4826A61236}
+		SolutionGuid = {A3718157-4AA3-4244-9079-7D70DCC047A0}
 	EndGlobalSection
 EndGlobal
