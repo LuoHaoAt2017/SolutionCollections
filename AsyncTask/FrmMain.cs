@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -7,17 +11,27 @@ namespace AsyncTask
 {
 	public partial class FrmMain : Form
 	{
-		private CancellationTokenSource tokenSource = new CancellationTokenSource();
+		private static CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+		private static HttpClient client = new HttpClient
+		{
+			MaxResponseContentBufferSize = 1_000_000
+		};
+
+		[DllImport("kernel32.dll")]
+		public static extern bool AllocConsole();
+
+		[DllImport("kernel32.dll")]
+		public static extern bool FreeConsole();
+
 		public FrmMain()
 		{
 			InitializeComponent();
 			// CombinateAsync();
-			HandleError4();
+			TestCancelRequest();
 		}
 
 		// 取消运行很长时间的任务
-
-
 		public static async Task ThrowAfter(int ms, string message)
 		{
 			await Task.Delay(ms);
@@ -186,6 +200,67 @@ namespace AsyncTask
 			{
 				Console.WriteLine("Method 2");
 			}
+		}
+
+		public static async Task TestCancelRequest()
+		{
+			IEnumerable<string> urlList = new string[]
+			{
+				"https://docs.microsoft.com",
+				"https://docs.microsoft.com/aspnet/core",
+				"https://docs.microsoft.com/azure",
+				"https://docs.microsoft.com/azure/devops",
+				"https://docs.microsoft.com/dotnet",
+				"https://docs.microsoft.com/dynamics365",
+				"https://docs.microsoft.com/education",
+				"https://docs.microsoft.com/enterprise-mobility-security",
+				"https://docs.microsoft.com/gaming",
+				"https://docs.microsoft.com/graph",
+				"https://docs.microsoft.com/microsoft-365",
+				"https://docs.microsoft.com/office",
+				"https://docs.microsoft.com/powershell",
+				"https://docs.microsoft.com/sql",
+				"https://docs.microsoft.com/surface",
+				"https://docs.microsoft.com/system-center",
+				"https://docs.microsoft.com/visualstudio",
+				"https://docs.microsoft.com/windows",
+				"https://docs.microsoft.com/xamarin"
+			};
+			LogHelper.Log("Application started.");
+
+			try
+			{
+				tokenSource.CancelAfter(3500);
+				await SumPageSizeAsync(urlList, tokenSource.Token);
+			}
+			catch(OperationCanceledException)
+			{
+				LogHelper.Error("\nTasks cancelled: timed out.\n");
+			}
+			finally
+			{
+				tokenSource.Dispose();
+			}
+
+			LogHelper.Log("Application ending.");
+		}
+
+		public static async Task SumPageSizeAsync(IEnumerable<string> urlList, CancellationToken token)
+		{
+			var stopWatch = Stopwatch.StartNew();
+			foreach(string url in urlList)
+			{
+				await ProcessUrlAsync(url, token);
+			}
+			stopWatch.Stop();
+			LogHelper.Log($"Elapsed time:{stopWatch.Elapsed}\n");
+		}
+
+		public static async Task ProcessUrlAsync(string url, CancellationToken token)
+		{
+			HttpResponseMessage response = await client.GetAsync(url, token);
+			byte[] content = await response.Content.ReadAsByteArrayAsync();
+			LogHelper.Log($"{url,-60} {content.Length, 10:#,#}");
 		}
 	}
 }
