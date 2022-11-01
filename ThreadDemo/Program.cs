@@ -15,10 +15,9 @@ namespace ThreadDemo
 		[STAThread]
 		static void Main()
 		{
-			// Application.EnableVisualStyles();
-			// Application.SetCompatibleTextRenderingDefault(false);
-			// Application.Run(new FrmMain());
-			TestMainThread();
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+			Application.Run(new FrmMain());
 		}
 
 		public static void MainTread()

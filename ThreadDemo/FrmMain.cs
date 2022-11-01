@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,6 +28,29 @@ namespace ThreadDemo
 		public FrmMain()
 		{
 			InitializeComponent();
+			TestThreadPriority();
+		}
+
+		// 线程优先级，线程调度器，线程调度队列
+		public static void TestThreadPriority()
+		{
+			List<ThreadPriority> list = new List<ThreadPriority>() 
+			{
+				ThreadPriority.Lowest,
+				ThreadPriority.BelowNormal,
+				ThreadPriority.Normal,
+				ThreadPriority.AboveNormal,
+				ThreadPriority.Highest,
+			};
+			for (int i = 0; i < list.Count; i++)
+			{
+				var index = i;
+				new Thread(() =>
+				{
+					Thread.Sleep(100);
+					LogHelper.Log($"Thread-{index + 1}");
+				}) { Priority = list[index] }.Start();
+			}
 		}
 
 		public static void TestParallel1()
