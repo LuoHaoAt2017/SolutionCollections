@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +29,7 @@ namespace ThreadDemo
 		public FrmMain()
 		{
 			InitializeComponent();
-			TestThreadPriority();
+			RaceConditions();
 		}
 
 		// 线程优先级，线程调度器，线程调度队列
@@ -270,6 +271,71 @@ namespace ThreadDemo
 			public void MainThread()
 			{
 				LogHelper.Log($"Running in a thread, data: {data}");
+			}
+		}
+
+		public class StateObject
+		{
+			private int state = 5;
+
+			public void ChangeState(int loop)
+			{
+				if (state == 5)
+				{
+					state++;
+					if (state == 7)
+					{
+						LogHelper.Log("Race Condition occurred after " + loop + " loops");
+					}
+				}
+				state = 5;
+			}
+		}
+
+		public class SimpleTask
+		{
+			public void RaceCondition(object obj)
+			{
+				Trace.Assert(obj is StateObject, "obj must be type of StateObject");
+				StateObject state = obj as StateObject;
+				int i = 0;
+				while(true)
+				{
+					state.ChangeState(i++);
+				}
+			}
+		}
+
+		public class SafetyTask
+		{
+			public void RaceCondition(object obj)
+			{
+				Trace.Assert(obj is StateObject, "obj must be type of StateObject");
+				StateObject state = obj as StateObject;
+				int i = 0;
+				while (true)
+				{
+					lock (state)
+					{
+						state.ChangeState(i++);
+					}
+				}
+			}
+		}
+
+		public static void RaceConditions()
+		{
+			// 没有对 state1 进行防护，存在条件竞争。
+			var state1 = new StateObject();
+			for(int i = 0; i < 2; i++)
+			{
+				Task.Run(() => new SimpleTask().RaceCondition(state1));
+			}
+			// 对 state2 进行了防护，不存在条件竞争。
+			var state2 = new StateObject();
+			for (int i = 0; i < 2; i++)
+			{
+				Task.Run(() => new SafetyTask().RaceCondition(state2));
 			}
 		}
 	}
