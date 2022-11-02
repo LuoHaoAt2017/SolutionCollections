@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static ThreadDemo.FrmMain;
+
 
 // 非阻塞式编程：单线程异步
 // 阻塞式编程：多线程同步
@@ -38,7 +37,7 @@ namespace ThreadDemo
 		public FrmMain()
 		{
 			InitializeComponent();
-			TestJob();
+			TestTimer();
 		}
 
 		// 线程优先级，线程调度器，线程调度队列
@@ -523,6 +522,41 @@ namespace ThreadDemo
 					}
 				}
 			}
+		}
+
+		public static void TestTimer()
+		{
+			var obj = new Object(); // 任意类型的对象，TimeAction 回调方法中 obj 接收
+			TimeSpan delay = TimeSpan.FromSeconds(2); // 启动定时器后，第一次调用回调函数的时间
+			TimeSpan interval = TimeSpan.FromSeconds(3); // 回调的重复时间间隔，置为 -1 时，定时器只能执行一次。
+			var timer = new System.Threading.Timer(ThreadingTimerAction, obj, delay, interval);
+			Thread.Sleep(15000);
+			timer.Dispose();
+		}
+
+		// 基于委托的机制
+		public static void ThreadingTimerAction(object obj)
+		{
+			// TimeAction 需要满足 TimeAction 委托，返回类型是 void, 接收的参数类型是 Object
+			LogHelper.Log($"System.Threading.Timer {DateTime.Now:T}");
+		}
+
+		// 基于事件的机制
+		public static void TimersTimer()
+		{
+			var t1 = new System.Timers.Timer(1000); // interval
+			t1.AutoReset = true; // 是否重置触发
+			t1.Elapsed += TimersTimeAction;
+			t1.Start();
+			Thread.Sleep(10000);
+			t1.Stop();
+			t1.Dispose();
+		}
+
+		public static void TimersTimeAction(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			// TimeAction 需要满足 TimeAction 委托，返回类型是 void, 接收的参数类型是 Object
+			LogHelper.Log($"System.Timers.Timer {DateTime.Now:T}");
 		}
 	}
 }
