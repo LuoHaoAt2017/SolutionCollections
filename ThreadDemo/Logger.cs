@@ -8,6 +8,8 @@ namespace ThreadDemo
 
 		private static readonly ILog errLogger = LogManager.GetLogger("ErrorLogger");
 
+		private static readonly ILog console = LogManager.GetLogger("ConsoleAppender");
+
 		public static void Log(string mesg)
 		{
 			if (infoLogger.IsInfoEnabled)
@@ -22,6 +24,11 @@ namespace ThreadDemo
 			{
 				errLogger.Error(mesg);
 			}
+		}
+
+		public static void Console(string mesg)
+		{
+			console.Info(mesg);
 		}
 	}
 }

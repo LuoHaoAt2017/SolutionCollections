@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ThreadDemo.FrmMain;
 
 // 非阻塞式编程：单线程异步
 // 阻塞式编程：多线程同步
@@ -22,6 +24,13 @@ using System.Windows.Forms;
 
 // 线程调用 Sleep 休眠或者等待其它线程执行结束，线程暂停执行。线程会阻塞代码继续往下运行。
 
+// 没有对竞争条件进行必要的锁定会出问题，错误对竞争条件进行锁定会导致死锁。
+// 多个线程访问共享状态，由于错误地使用锁，导致每个线程都在等待对方解除对共享状态的锁定。
+// 锁定顺序和锁定超时时间
+// 最好不要在线程之间共享数据，尽量避免。无法避免的话，就必须采用同步技术。同步技术有很多，其中之一就是对争用条件加锁 lock。
+// 同步技术：确保一次只有一个线程访问和改变共享状态。
+
+// 锁定只能锁定对象的引用。锁定值得副本没有必要。锁定得对象还可以区分为：锁定实例成员，锁定静态成员。
 namespace ThreadDemo
 {
 	public partial class FrmMain : Form
@@ -29,7 +38,7 @@ namespace ThreadDemo
 		public FrmMain()
 		{
 			InitializeComponent();
-			RaceConditions();
+			TestJob();
 		}
 
 		// 线程优先级，线程调度器，线程调度队列
@@ -294,6 +303,21 @@ namespace ThreadDemo
 
 		public class SimpleTask
 		{
+			private StateObject s1;
+
+			private StateObject s2;
+
+			public SimpleTask()
+			{
+
+			}
+
+			public SimpleTask(StateObject s1, StateObject s2)
+			{
+				this.s1 = s1;
+				this.s2 = s2;
+			}
+
 			public void RaceCondition(object obj)
 			{
 				Trace.Assert(obj is StateObject, "obj must be type of StateObject");
@@ -302,6 +326,40 @@ namespace ThreadDemo
 				while(true)
 				{
 					state.ChangeState(i++);
+				}
+			}
+
+			public void DeadLock1()
+			{
+				int i = 0;
+				while(true)
+				{
+					lock(s1)
+					{
+						lock(s2)
+						{
+							s1.ChangeState(i);
+							s2.ChangeState(i++);
+							LogHelper.Console($"still running {i}");
+						}
+					}
+				}
+			}
+
+			public void DeadLock2()
+			{
+				int i = 0;
+				while (true)
+				{
+					lock (s2)
+					{
+						lock (s1)
+						{
+							s1.ChangeState(i);
+							s2.ChangeState(i++);
+							LogHelper.Console($"still running {i}");
+						}
+					}
 				}
 			}
 		}
@@ -336,6 +394,134 @@ namespace ThreadDemo
 			for (int i = 0; i < 2; i++)
 			{
 				Task.Run(() => new SafetyTask().RaceCondition(state2));
+			}
+		}
+
+		public static void TestDeadLock()
+		{
+			var state1 = new StateObject();
+			var state2 = new StateObject();
+			new Task(() => new SimpleTask(state1, state2).DeadLock1()).Start();
+			new Task(() => new SimpleTask(state1, state2).DeadLock2()).Start();
+		}
+
+		public class ShareState
+		{
+			private int state = 0;
+
+			private Object root = new object();
+			public int State
+			{
+				get { return state;  }
+			}
+
+			public int IncrementState()
+			{
+				lock(root)
+				{
+					return state++;
+				}
+			}
+		}
+
+		public class Job
+		{
+			ShareState shareState;
+
+			public Job(ShareState state)
+			{
+				shareState = state;
+			}
+
+			public void DoTheJob()
+			{
+				for (int i = 0; i < 5000; i++)
+				{
+					lock (shareState) // 锁定实例成员
+					{
+						shareState.IncrementState();
+					}
+				}
+			}
+		}
+
+		public static void TestJob()
+		{
+			int Count = 20;
+			ShareState state = new ShareState();
+			var tasks = new Task[Count];
+			for(int i = 0; i < Count; i++)
+			{
+				tasks[i] = Task.Run(() => new Job(state).DoTheJob());
+			}
+			for (int i = 0; i < Count; i++)
+			{
+				tasks[i].Wait();
+			}
+			LogHelper.Log($"total run {state.State} times");
+		}
+
+		public class SimpleDemo
+		{
+
+			// 非同步版本
+			public virtual bool IsSynchronized
+			{
+				get { return false; }
+			}
+
+			public virtual void DoThis()
+			{
+
+			}
+
+			public virtual void DoThat()
+			{
+
+			}
+
+			// 同步版本
+			// 同步版本只负责线程安全，具体的业务逻辑放在非同步版本中执行。
+			private class SynchronizedDemo : SimpleDemo
+			{
+				private object syncRoot = new object();
+
+				private SimpleDemo syncDemo;
+
+				public SynchronizedDemo(SimpleDemo demo)
+				{
+					this.syncDemo = demo;
+				}
+
+				public override bool IsSynchronized
+				{
+					get { return true; }
+				}
+
+				public static SimpleDemo Synchronized(SimpleDemo demo)
+				{
+					if (!demo.IsSynchronized)
+					{
+						return new SynchronizedDemo(demo);
+					}
+					return demo;
+				}
+
+				public override void DoThis()
+				{
+					lock (syncRoot)
+					{
+						this.syncDemo.DoThis();
+					}
+				}
+
+				public override void DoThat()
+				{
+					lock (syncRoot)
+					{
+						this.syncDemo.DoThat();
+					}
+				}
 			}
 		}
 	}
