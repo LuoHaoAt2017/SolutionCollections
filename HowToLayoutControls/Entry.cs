@@ -19,7 +19,115 @@ namespace HowToLayoutControls
 			// InitializeDataGridView();
 			// InitializeDateTimePicker();
 			// InitializeDomainUpDown();
-			InitializeErrorProvider();
+			// InitializeErrorProvider();
+			InitializeFlowLayoutPanel();
+		}
+
+		private void InitializeFlowLayoutPanel()
+		{
+			FlowLayoutPanel panel1 = new FlowLayoutPanel();
+			panel1.Height = 300;
+			panel1.Width = 600;
+			panel1.Location = new Point(0, 0);
+			// 指示应当对 FlowLayoutPanel 控件的内容进行换行还是剪裁。
+			panel1.WrapContents = true; // false: 剪裁
+			panel1.FlowDirection = FlowDirection.LeftToRight;
+			string[] list = 
+			{ 
+				"AAAAAA", "BBBBBB", "CCCCCC",
+				"DDDDDD", "EEEEEE", "FFFFFF",
+				"GGGGGG", "HHHHHH", "IIIIII",
+				"GGGGGG", "KKKKKK", "LLLLLL",
+			};
+			for(int i = 0; i < list.Length; i++)
+			{
+				AddButtonToPanel(list[i], panel1);
+			}
+			this.Controls.Add(panel1);
+
+			FlowLayoutPanel panel2 = new FlowLayoutPanel();
+			panel2.FlowDirection = FlowDirection.TopDown;
+			panel2.Height = 400;
+			panel2.Width = 600;
+			panel2.Location = new Point(900, 0);
+			for (int i = 0; i < list.Length; i++)
+			{
+				AddButtonToPanel(list[i], panel2);
+			}
+			this.Controls.Add(panel2);
+
+			FlowLayoutPanel panel3 = new FlowLayoutPanel();
+			panel3.Height = 300;
+			panel3.Width = 300;
+			panel3.BorderStyle = BorderStyle.FixedSingle;
+			panel3.Location = new Point(0, 400);
+			panel3.Padding = new Padding(0, 0, 0, 0);
+			panel3.WrapContents = true;
+			panel3.FlowDirection = FlowDirection.TopDown;
+			Button button1 = new Button();
+			Button button2 = new Button();
+			Button button3 = new Button();
+			Button button4 = new Button();
+			Button button5 = new Button();
+			Button button6 = new Button();
+			button1.Width = 200;
+			button1.Text = "button1";
+			button2.Text = "button2";
+			button3.Text = "button3";
+			button4.Text = "button4";
+			button5.Text = "button5";
+			button6.Text = "button6";
+			button2.Dock = DockStyle.Fill; // 第二个按钮采用与第一个按钮相同的宽度。 它不在 FlowLayoutPanel 控件的宽度范围内拉伸。
+			button3.Dock = DockStyle.Bottom;
+			button4.Anchor = AnchorStyles.Left; // 既锚定左边又锚定右边，就会在左右方向上拉伸元素
+			button5.Anchor = AnchorStyles.Right;
+			button6.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			panel3.Controls.Add(button1);
+			panel3.Controls.Add(button2);
+			panel3.Controls.Add(button3);
+			panel3.Controls.Add(button4);
+			panel3.Controls.Add(button5);
+			panel3.Controls.Add(button6);
+			this.Controls.Add(panel3);
+
+			FlowLayoutPanel panel4 = new FlowLayoutPanel();
+			panel4.Height = 300;
+			panel4.Width = 600;
+			panel4.BorderStyle = BorderStyle.FixedSingle;
+			panel4.Location = new Point(320, 300);
+			panel4.Padding = new Padding(0, 0, 0, 0);
+			panel4.WrapContents = true;
+			panel4.FlowDirection = FlowDirection.LeftToRight;
+			Button button7 = new Button();
+			Button button8 = new Button();
+			Button button9 = new Button();
+			Button button10 = new Button();
+			Button button11 = new Button();
+			Button button12 = new Button();
+			button7.Height = 200;
+			button7.Text = "button7";
+			button8.Text = "button8";
+			button9.Text = "button9";
+			button10.Text = "button10";
+			button11.Text = "button11";
+			button12.Text = "button12";
+			button8.Dock = DockStyle.Top; // 第二个按钮采用与第一个按钮相同的宽度。 它不在 FlowLayoutPanel 控件的宽度范围内拉伸。
+			button9.Dock = DockStyle.Bottom;
+			button10.Anchor = AnchorStyles.Top;
+			button11.Anchor = AnchorStyles.Bottom;
+			button12.Anchor = AnchorStyles.Bottom | AnchorStyles.Top;
+			panel4.Controls.Add(button7);
+			panel4.Controls.Add(button8);
+			panel4.Controls.Add(button9);
+			panel4.Controls.Add(button10);
+			panel4.Controls.Add(button11);
+			panel4.Controls.Add(button12);
+			this.Controls.Add(panel4);
+		}
+
+		private void InitializeTableLayoutPanel()
+		{
+
 		}
 
 		private void InitializeErrorProvider()
@@ -211,6 +319,15 @@ namespace HowToLayoutControls
 			{
 				songsDataGridView.Rows.RemoveAt(songsDataGridView.SelectedRows[0].Index);
 			}
+		}
+
+		private void AddButtonToPanel(string label, Panel panel)
+		{
+			Button button = new Button();
+			button.Text = label;
+			button.Width = 120;
+			button.Height = 60;
+			panel.Controls.Add(button);
 		}
 
 		// 格式化列表单元格
