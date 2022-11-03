@@ -12,6 +12,10 @@ namespace HowToLayoutControls
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+		private int W = 1200;
+
+		private int H = 600;
+
 		/// <summary>
 		/// 清理所有正在使用的资源。
 		/// </summary>
@@ -35,158 +39,73 @@ namespace HowToLayoutControls
 		{
 			this.components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Text = "入口";
-			CreateMyListView();
+			this.ClientSize = new System.Drawing.Size(this.W, this.H);
 			ProductTable();
-		}
-
-		private void CreateMyListView()
-		{
-			// Create a new ListView control.
-			ListView listView1 = new ListView();
-			listView1.Bounds = new Rectangle(new Point(10, 10), new Size(300, 200));
-
-			//// Set the view to show details.
-			listView1.View = View.Details;
-			//// Allow the user to edit item text.
-			//listView1.LabelEdit = true;
-			//// Allow the user to rearrange columns.
-			//listView1.AllowColumnReorder = true;
-			//// Display check boxes.
-			listView1.CheckBoxes = true;
-			//// Select the item and subitems when selection is made.
-			//listView1.FullRowSelect = true;
-			//// Display grid lines.
-			//listView1.GridLines = true;
-			//// Sort the items in the list in ascending order.
-			//listView1.Sorting = SortOrder.Ascending;
-
-			// Create three items and three sets of subitems for each item.
-			ListViewItem item1 = new ListViewItem("item1", 0);
-			// Place a check mark next to the item.
-			item1.Checked = true;
-			item1.SubItems.Add("1");
-			item1.SubItems.Add("2");
-			item1.SubItems.Add("3");
-			ListViewItem item2 = new ListViewItem("item2", 1);
-			item2.SubItems.Add("4");
-			item2.SubItems.Add("5");
-			item2.SubItems.Add("6");
-			ListViewItem item3 = new ListViewItem("item3", 0);
-			// Place a check mark next to the item.
-			item3.Checked = true;
-			item3.SubItems.Add("7");
-			item3.SubItems.Add("8");
-			item3.SubItems.Add("9");
-
-			// Create columns for the items and subitems.
-			// Width of -2 indicates auto-size.
-			listView1.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
-			listView1.Columns.Add("Column 2", -2, HorizontalAlignment.Left);
-			listView1.Columns.Add("Column 3", -2, HorizontalAlignment.Left);
-			listView1.Columns.Add("Column 4", -2, HorizontalAlignment.Center);
-
-			//Add the items to the ListView.
-			listView1.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
-
-			//// Create two ImageList objects.
-			//ImageList imageListSmall = new ImageList();
-			//ImageList imageListLarge = new ImageList();
-
-			//// Initialize the ImageList objects with bitmaps.
-			//imageListSmall.Images.Add(Bitmap.FromFile("C:\\MySmallImage1.bmp"));
-			//imageListSmall.Images.Add(Bitmap.FromFile("C:\\MySmallImage2.bmp"));
-			//imageListLarge.Images.Add(Bitmap.FromFile("C:\\MyLargeImage1.bmp"));
-			//imageListLarge.Images.Add(Bitmap.FromFile("C:\\MyLargeImage2.bmp"));
-
-			////Assign the ImageList objects to the ListView.
-			//listView1.LargeImageList = imageListLarge;
-			//listView1.SmallImageList = imageListSmall;
-
-			// Add the ListView to the control collection.
-			this.Controls.Add(listView1);
-		}
-
-		private void ProductFilter()
-		{
-
 		}
 
 		private void ProductTable()
 		{
 			ListView listView = new ListView();
 			listView.View = View.Details;
-			listView.CheckBoxes = true;
-			listView.FullRowSelect = true;
-			listView.Bounds = new Rectangle(new Point(400, 10), new Size(400, 400));
+			listView.Location = new Point(10, 10);
+			listView.Dock = DockStyle.Fill; // listView.Size = new Size(this.W, this.H);
+			listView.Padding = new Padding(50, 50, 50, 50); // 失效
+			listView.Font = new Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			listView.GridLines = true;
+			listView.ShowItemToolTips = true;
+			listView.Alignment = ListViewAlignment.Left;
+			listView.BackColor = Color.Orange;
+			listView.ForeColor = Color.White;
+			listView.BorderStyle = BorderStyle.FixedSingle;
+			listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+			
 
-			DataTable dataTable = GetProductSource();
-			for(int i = 0; i < dataTable.Rows.Count; i++)
+			DataTable dataTable = new DataTable();
+			GetProductSource(dataTable);
+
+			foreach (DataColumn col in dataTable.Columns)
 			{
-				ListViewItem item = new ListViewItem();
+				listView.Columns.Add(col.ColumnName, -2, HorizontalAlignment.Left);
 			}
-			ListViewItem[] items = new ListViewItem[3];
-			ListViewItem item1 = new ListViewItem("0001");
-			ListViewItem item2 = new ListViewItem("0002");
-			ListViewItem item3 = new ListViewItem("0003");
 
-			item1.SubItems.Add("0001");
-			item1.SubItems.Add("沃尔沃");
-			item1.SubItems.Add("45");
-			item1.Checked = false;
-
-			item2.SubItems.Add("0001");
-			item2.SubItems.Add("沃尔沃");
-			item2.SubItems.Add("45");
-			item2.Checked = false;
-
-			item3.SubItems.Add("0001");
-			item3.SubItems.Add("沃尔沃");
-			item3.SubItems.Add("45");
-			item3.Checked = false;
-
-			items[0] = item1;
-			items[1] = item2;
-			items[2] = item3;
-
-			listView.Items.AddRange(items);
-
-			string[] columns = new string[4] { "Selected", "ProductId", "ProductName", "ProductPrice" };
-
-			foreach (var col in columns)
+			foreach (DataRow row in dataTable.Rows)
 			{
-				listView.Columns.Add(col, -2, HorizontalAlignment.Center);
+				ListViewItem item = new ListViewItem(new String[3]
+				{
+					(string)row[0],
+					(string)row[1],
+					(string)row[2],
+				});
+				item.ToolTipText = "ToolTipText";
+				listView.Items.Add(item);
 			}
 
 			this.Controls.Add(listView);
 		}
 
-		private DataTable GetProductSource()
+		private void GetProductSource(DataTable table)
 		{
 			string[] columns = new string[3] { "ProductId", "ProductName", "ProductPrice" };
-			DataTable dataTable = new DataTable();
+			
 			for (int i = 0; i < columns.Length; i++)
 			{
 				DataColumn col = new DataColumn();
 				col.AllowDBNull = false;
 				col.ColumnName = columns[i];
 				col.DataType = System.Type.GetType("System.String");
-				dataTable.Columns.Add(col);
+				table.Columns.Add(col);
 			}
 			for (int i = 0; i < 30; i++)
 			{
 				Random rand = new Random();
-				DataRow row = dataTable.NewRow();
-				row[columns[i]] = rand.Next().ToString();
+				DataRow row = table.NewRow();
+				row[columns[0]] = rand.NextDouble().ToString();
+				row[columns[1]] = rand.NextDouble().ToString();
+				row[columns[2]] = rand.NextDouble().ToString();
+				table.Rows.Add(row);
 			}
-			return dataTable;
 		}
 
-		private void ProductForm()
-		{
-
-		}
 		#endregion
 	}
 }
