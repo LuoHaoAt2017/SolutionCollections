@@ -64,9 +64,12 @@ namespace HowToLayoutControls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(this.W, this.H);
+			this.ClientSize = new System.Drawing.Size(1000, 800);
+			this.Name = "Entry";
+			this.ResumeLayout(false);
+
 		}
 
 		private void DataGridViewBandDemo()
@@ -462,6 +465,7 @@ namespace HowToLayoutControls
 		}
 
 		#endregion
+		private Panel panel1;
 	}
 }
 

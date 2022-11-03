@@ -20,7 +20,47 @@ namespace HowToLayoutControls
 			// InitializeDateTimePicker();
 			// InitializeDomainUpDown();
 			// InitializeErrorProvider();
-			InitializeFlowLayoutPanel();
+			// InitializeFlowLayoutPanel();
+			InitializeAnchor();
+		}
+
+		private void InitializeAnchor()
+		{
+			//Panel panel = new Panel();
+			//panel.Width = 400;
+			//panel.Height = 400;
+			//panel.BorderStyle = BorderStyle.FixedSingle;
+			//Button button = new Button();
+			//button.Text = "button";
+			////button.Anchor = AnchorStyles.Top;
+			//button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			//panel.Controls.Add(button);
+			//this.Controls.Add(panel);
+
+			// Create a button and add it to the form.
+			Button button1 = new Button();
+			button1.Text = "button1";
+			// Anchor the button to the bottom right corner of the form
+			button1.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+			// Add the button to the form.
+			this.Controls.Add(button1);
+		}
+
+		private void InitializeDock()
+		{
+			Panel panel = new Panel();
+			panel.Width = 400;
+			panel.Height = 400;
+			panel.BorderStyle = BorderStyle.FixedSingle;
+			Button button = new Button();
+			button.Text = "button";
+			//button.Dock = DockStyle.Left;
+			//button.Dock = DockStyle.Right;
+			//button.Dock = DockStyle.Bottom;
+			//button.Dock = DockStyle.Top;
+			//button.Dock = DockStyle.Fill;
+			panel.Controls.Add(button);
+			this.Controls.Add(panel);
 		}
 
 		private void InitializeFlowLayoutPanel()
