@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace HowToLayoutControls
 {
@@ -17,7 +18,48 @@ namespace HowToLayoutControls
 			InitializeComponent();
 			// InitializeDataGridView();
 			// InitializeDateTimePicker();
-			InitializeDomainUpDown();
+			// InitializeDomainUpDown();
+			InitializeErrorProvider();
+		}
+
+		private void InitializeErrorProvider()
+		{
+			ErrorProvider errorProvider = new ErrorProvider();
+			TextBox numberBox = new TextBox();
+			numberBox.Location = new Point(0, 100);
+			numberBox.Width = 320;
+			numberBox.Height = 80;
+			numberBox.Validating += new CancelEventHandler((object sender, CancelEventArgs e) =>
+			{
+				try
+				{
+					int x = Int32.Parse(numberBox.Text);
+					errorProvider.SetError(numberBox, "");
+				}
+				catch(Exception)
+				{
+					errorProvider.SetError(numberBox, "Not an integer value");
+				}
+			});
+
+			this.Controls.Add(numberBox);
+
+			//ErrorProvider errorProvide2 = new ErrorProvider();
+			//DataSet dataSet = new DataSet();
+			//DataTable table = new DataTable("Products");
+			//GetProductSource(table);
+			//dataSet.Tables.Add(table);
+			//TextBox textBox = new TextBox();
+			//textBox.Location = new Point(0, 0);
+			//textBox.Width = 320;
+			//textBox.Height = 80;
+			//textBox.DataBindings.Add("Text", dataSet, "Products.ProductName");
+			//errorProvide2.DataSource = dataSet;
+			//errorProvide2.DataMember = "Products";
+			//errorProvide2.ContainerControl = this;
+			//table.Rows[5].SetColumnError("ProductName", "Bad data in this row.");
+			//this.BindingContext[table].Position = 5;
+			//this.Controls.Add(textBox);
 		}
 
 		private void InitializeDomainUpDown()
