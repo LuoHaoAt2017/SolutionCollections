@@ -14,6 +14,7 @@ namespace HowToLayoutControls
 		private int W = 1200;
 		private int H = 600;
 		private bool shortMode;
+		private int ratingColumn = 3;
 		private bool boringRecipe;
 		private string thirdColumnHeader = "Main Ingredients";
 		private string boringMeatloaf = "ground beef";
@@ -35,7 +36,17 @@ namespace HowToLayoutControls
 		Button Button8 = new Button();
 		Button Button9 = new Button();
 		Button Button10 = new Button();
-
+		Button Button11 = new Button();
+		Button Button12 = new Button();
+		Button Button13 = new Button();
+		Button Button14 = new Button();
+		Button Button15 = new Button();
+		Button Button16 = new Button();
+		Button Button17 = new Button();
+		Button Button18 = new Button();
+		Button Button19 = new Button();
+		Button Button20 = new Button();
+		Button Button21 = new Button();
 		/// <summary>
 		/// 清理所有正在使用的资源。
 		/// </summary>
@@ -67,7 +78,7 @@ namespace HowToLayoutControls
 		private void DataGridViewBandDemo()
 		{
 
-			flowLayoutPanel.Height = 50;
+			flowLayoutPanel.Height = 120;
 			flowLayoutPanel.Dock = DockStyle.Bottom;
 			
 			AddButton(Button1, "Reset", new EventHandler(Button1_Click));
@@ -155,50 +166,24 @@ namespace HowToLayoutControls
 			AddButton(Button7, "Disable First Column Resizing", new EventHandler(Button7_Click));
 			AddButton(Button8, "单元只读", new EventHandler(Button8_Click));
 			AddButton(Button9, "Style Using Tag", new EventHandler(Button9_Click));
-		}
+			AddButton(Button10, "Set Row Two Minimum Height", new EventHandler(Button10_Click));
+			AddButton(Button11, "Set Row One Height", new EventHandler(Button11_Click));
+			AddButton(Button12, "Label Rows", new EventHandler(Button12_Click));
+			AddButton(Button13, "Turn on Extra Edge", new EventHandler(Button13_Click));
+			AddButton(Button14, "Give Cheesecake an Excellent Rating", new EventHandler(Button14_Click));
 
+			AddButton(Button15, "Set Width of Column One", new EventHandler(Button15_Click));
+			AddButton(Button16, "Autosize Third Column", new EventHandler(Button16_Click));
+			AddButton(Button17, "Add Thick Vertical Edge", new EventHandler(Button17_Click));
+			AddButton(Button18, "Style and Number Columns", new EventHandler(Button18_Click));
+			AddButton(Button19, "Change Column Header Text", new EventHandler(Button19_Click));
+			AddButton(Button20, "Swap First and Last Columns", new EventHandler(Button20_Click));
+			AddButton(Button21, "Set Minimum Width of Column Two", new EventHandler(Button21_Click));
+		}
 
 		private static void Toggle(ref bool toggleThis)
 		{
 			toggleThis = !toggleThis;
-		}
-
-		// 重置的逻辑：删除，销毁，重建，添加。
-		private void Button1_Click(object sender, System.EventArgs e)
-		{
-			this.Controls.Remove(dataGridView);
-			dataGridView.Dispose(); // 释放资源
-			InitializeDataGridView();
-		}
-
-		// 改变表格头
-		private void Button2_Click(object sender, System.EventArgs e)
-		{
-			Toggle(ref shortMode);
-			if (shortMode)
-			{ dataGridView.Columns[2].HeaderText = "S"; }
-			else
-			{ dataGridView.Columns[2].HeaderText = thirdColumnHeader; }
-		}
-
-		// Change the meatloaf recipe.
-		private void Button3_Click(object sender, System.EventArgs e)
-		{
-			Toggle(ref boringRecipe);
-			if (boringRecipe)
-			{
-				SetMeatloaf(boringMeatloaf, boringMeatloafRanking);
-			}
-			else
-			{
-				string greatMeatloafRecipe =
-					"1 lb. lean ground beef, " +
-					"1/2 cup bread crumbs, 1/4 cup ketchup," +
-					"1/3 tsp onion powder, " +
-					"1 clove of garlic, 1/2 pack onion soup mix " +
-					" dash of your favorite BBQ Sauce";
-				SetMeatloaf(greatMeatloafRecipe, "***");
-			}
 		}
 
 		// 通过行和列来改变单元格的值
@@ -213,6 +198,7 @@ namespace HowToLayoutControls
 			dataGridView = new DataGridView();
 			this.Controls.Add(dataGridView);
 			dataGridView.Size = new Size(300, 200);
+			dataGridView.Location = new Point(400, 100);
 			// dataGridView.Dock = DockStyle.Fill;
 			// Create an unbound DataGridView by declaring a
 			// column count.
@@ -272,6 +258,52 @@ namespace HowToLayoutControls
 			band.Tag = color;
 		}
 
+		private static void FreezeBand(DataGridViewBand band)
+		{
+			band.Frozen = true;
+			DataGridViewCellStyle style = new DataGridViewCellStyle();
+			style.BackColor = Color.WhiteSmoke;
+			band.DefaultCellStyle = style;
+		}
+
+		// 重置的逻辑：删除，销毁，重建，添加。
+		private void Button1_Click(object sender, System.EventArgs e)
+		{
+			this.Controls.Remove(dataGridView);
+			dataGridView.Dispose(); // 释放资源
+			InitializeDataGridView();
+		}
+
+		// 改变表格头
+		private void Button2_Click(object sender, System.EventArgs e)
+		{
+			Toggle(ref shortMode);
+			if (shortMode)
+			{ dataGridView.Columns[2].HeaderText = "S"; }
+			else
+			{ dataGridView.Columns[2].HeaderText = thirdColumnHeader; }
+		}
+
+		// Change the meatloaf recipe.
+		private void Button3_Click(object sender, System.EventArgs e)
+		{
+			Toggle(ref boringRecipe);
+			if (boringRecipe)
+			{
+				SetMeatloaf(boringMeatloaf, boringMeatloafRanking);
+			}
+			else
+			{
+				string greatMeatloafRecipe =
+					"1 lb. lean ground beef, " +
+					"1/2 cup bread crumbs, 1/4 cup ketchup," +
+					"1/3 tsp onion powder, " +
+					"1 clove of garlic, 1/2 pack onion soup mix " +
+					" dash of your favorite BBQ Sauce";
+				SetMeatloaf(greatMeatloafRecipe, "***");
+			}
+		}
+
 		private void Button4_Click(object sender, System.EventArgs e)
 		{
 
@@ -282,14 +314,6 @@ namespace HowToLayoutControls
 		{
 
 			FreezeBand(dataGridView.Columns[1]);
-		}
-
-		private static void FreezeBand(DataGridViewBand band)
-		{
-			band.Frozen = true;
-			DataGridViewCellStyle style = new DataGridViewCellStyle();
-			style.BackColor = Color.WhiteSmoke;
-			band.DefaultCellStyle = style;
 		}
 
 		// Hide a band of cells.
@@ -338,6 +362,110 @@ namespace HowToLayoutControls
 					band.DefaultCellStyle.BackColor = (Color)band.Tag;
 				}
 			}
+		}
+
+		private void Button10_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewRow row = dataGridView.Rows[1];
+			row.MinimumHeight = 40;
+		}
+
+		private void Button11_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewRow row = dataGridView.Rows[0];
+			row.Height = 15;
+		}
+
+		private void Button12_Click(object sender, System.EventArgs e)
+		{
+			int rowNumber = 1;
+			foreach (DataGridViewRow row in dataGridView.Rows)
+			{
+				if (row.IsNewRow) continue;
+				row.HeaderCell.Value = "Row " + rowNumber;
+				rowNumber = rowNumber + 1;
+			}
+			dataGridView.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
+		}
+
+		private void Button13_Click(object sender, System.EventArgs e)
+		{
+			int secondRow = 1;
+			DataGridViewRow row = dataGridView.Rows[secondRow];
+			row.DividerHeight = 10;
+		}
+
+		private void Button14_Click(object sender, System.EventArgs e)
+		{
+			UpdateStars(dataGridView.Rows[4], "******************");
+		}
+
+		private void Button15_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewColumn column = dataGridView.Columns[0];
+			column.Width = 60;
+		}
+
+		private void Button16_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewColumn column = dataGridView.Columns[2];
+			column.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+		}
+
+		private void Button17_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewColumn column = dataGridView.Columns[2];
+			column.DividerWidth = 10;
+		}
+
+		private void Button18_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewCellStyle style = new DataGridViewCellStyle();
+			style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			style.ForeColor = Color.IndianRed;
+			style.BackColor = Color.Ivory;
+
+			foreach (DataGridViewColumn column in dataGridView.Columns)
+			{
+				column.HeaderCell.Value = column.Index.ToString();
+				column.HeaderCell.Style = style;
+			}
+		}
+
+		private void Button19_Click(object sender, System.EventArgs e)
+		{
+			foreach (DataGridViewColumn column in dataGridView.Columns)
+			{
+
+				column.HeaderText = String.Concat("Column ", column.Index.ToString());
+			}
+		}
+
+		private void Button20_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewColumnCollection columnCollection = dataGridView.Columns;
+
+			DataGridViewColumn firstVisibleColumn = columnCollection.GetFirstColumn(DataGridViewElementStates.Visible);
+			DataGridViewColumn lastVisibleColumn = columnCollection.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None);
+
+			int firstColumn_sIndex = firstVisibleColumn.DisplayIndex;
+			firstVisibleColumn.DisplayIndex = lastVisibleColumn.DisplayIndex;
+			lastVisibleColumn.DisplayIndex = firstColumn_sIndex;
+		}
+
+		private void Button21_Click(object sender, System.EventArgs e)
+		{
+			DataGridViewColumn column = dataGridView.Columns[1];
+			column.MinimumWidth = 40;
+		}
+
+		private void UpdateStars(DataGridViewRow row, string stars)
+		{
+
+			row.Cells[ratingColumn].Value = stars;
+
+			// Resize the column width to account for the new value.
+			row.DataGridView.AutoResizeColumn(ratingColumn, DataGridViewAutoSizeColumnMode.DisplayedCells);
 		}
 
 		private void SetupDataGridView()
