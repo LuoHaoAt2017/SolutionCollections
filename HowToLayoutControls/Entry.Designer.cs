@@ -22,10 +22,6 @@ namespace HowToLayoutControls
 
 		private DataGridView dataGridView;
 		private FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
-		private DataGridView songsDataGridView = new DataGridView();
-		private Panel btnPanel = new Panel();
-		private Button addNewBtn = new Button();
-		private Button deleteBtn = new Button();
 		Button Button1 = new Button();
 		Button Button2 = new Button();
 		Button Button3 = new Button();
@@ -71,8 +67,6 @@ namespace HowToLayoutControls
 			this.components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(this.W, this.H);
-			// ProductDataGridView();
-			DataGridViewBandDemo();
 		}
 
 		private void DataGridViewBandDemo()
@@ -80,13 +74,12 @@ namespace HowToLayoutControls
 
 			flowLayoutPanel.Height = 120;
 			flowLayoutPanel.Dock = DockStyle.Bottom;
-			
 			AddButton(Button1, "Reset", new EventHandler(Button1_Click));
 			AddButton(Button2, "Change Column 3 Header", new EventHandler(Button2_Click));
 			AddButton(Button3, "Change Meatloaf Recipe", new EventHandler(Button3_Click));
 			this.Controls.Add(flowLayoutPanel);
 			AddAdditionalButtons();
-			InitializeDataGridView();
+			CreateDataGridView();
 		}
 
 		private void ProductListView()
@@ -193,7 +186,7 @@ namespace HowToLayoutControls
 			dataGridView.Rows[0].Cells[3].Value = rating;
 		}
 
-		private void InitializeDataGridView()
+		private void CreateDataGridView()
 		{
 			dataGridView = new DataGridView();
 			this.Controls.Add(dataGridView);
@@ -466,146 +459,6 @@ namespace HowToLayoutControls
 
 			// Resize the column width to account for the new value.
 			row.DataGridView.AutoResizeColumn(ratingColumn, DataGridViewAutoSizeColumnMode.DisplayedCells);
-		}
-
-		private void SetupDataGridView()
-		{
-
-			songsDataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.Navy;
-			songsDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-			songsDataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(songsDataGridView.Font, FontStyle.Bold);
-
-			songsDataGridView.Name = "SongsDataGridView";
-			songsDataGridView.Location = new Point(8, 8);
-			songsDataGridView.Size = new Size(500, 250);
-			songsDataGridView.GridColor = Color.Black;
-			songsDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-			songsDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-
-			songsDataGridView.ColumnCount = 5;
-			songsDataGridView.Columns[0].Name = "Release Date";
-			songsDataGridView.Columns[1].Name = "Track";
-			songsDataGridView.Columns[2].Name = "Title";
-			songsDataGridView.Columns[3].Name = "Artist";
-			songsDataGridView.Columns[4].Name = "Album";
-			songsDataGridView.Columns[4].DefaultCellStyle.Font = new Font(songsDataGridView.DefaultCellStyle.Font, FontStyle.Italic);
-
-			songsDataGridView.MultiSelect = false;
-			songsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			songsDataGridView.Dock = DockStyle.Fill;
-			songsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(CellFormatting);
-			songsDataGridView.CellStateChanged += new DataGridViewCellStateChangedEventHandler(CellStateChange);
-			songsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CellValueChange);
-			this.Controls.Add(songsDataGridView);
-		}
-
-		private void PopulateDataGridView()
-		{
-			string[] row0 = { "11/22/1968", "29", "Revolution 9",
-			"Beatles", "The Beatles [White Album]" };
-			string[] row1 = { "1960", "6", "Fools Rush In",
-			"Frank Sinatra", "Nice 'N' Easy" };
-			string[] row2 = { "11/11/1971", "1", "One of These Days",
-			"Pink Floyd", "Meddle" };
-			string[] row3 = { "1988", "7", "Where Is My Mind?",
-			"Pixies", "Surfer Rosa" };
-			string[] row4 = { "5/1981", "9", "Can't Find My Mind",
-			"Cramps", "Psychedelic Jungle" };
-			string[] row5 = { "6/10/2003", "13",
-			"Scatterbrain. (As Dead As Leaves.)",
-			"Radiohead", "Hail to the Thief" };
-			string[] row6 = { "6/30/1992", "3", "Dress", "P J Harvey", "Dry" };
-
-			songsDataGridView.Rows.Add(row0);
-			songsDataGridView.Rows.Add(row1);
-			songsDataGridView.Rows.Add(row2);
-			songsDataGridView.Rows.Add(row3);
-			songsDataGridView.Rows.Add(row4);
-			songsDataGridView.Rows.Add(row5);
-			songsDataGridView.Rows.Add(row6);
-
-			songsDataGridView.Columns[0].DisplayIndex = 3;
-			songsDataGridView.Columns[1].DisplayIndex = 4;
-			songsDataGridView.Columns[2].DisplayIndex = 0;
-			songsDataGridView.Columns[3].DisplayIndex = 1;
-			songsDataGridView.Columns[4].DisplayIndex = 2;
-		}
-
-		private void GetProductSource(DataTable table)
-		{
-			string[] columns = new string[3] { "ProductId", "ProductName", "ProductPrice" };
-
-			for (int i = 0; i < columns.Length; i++)
-			{
-				DataColumn col = new DataColumn();
-				col.AllowDBNull = false;
-				col.ColumnName = columns[i];
-				col.DataType = System.Type.GetType("System.String");
-				table.Columns.Add(col);
-			}
-			for (int i = 0; i < 30; i++)
-			{
-				Random rand = new Random();
-				DataRow row = table.NewRow();
-				row[columns[0]] = rand.NextDouble().ToString();
-				row[columns[1]] = rand.NextDouble().ToString();
-				row[columns[2]] = rand.NextDouble().ToString();
-				table.Rows.Add(row);
-			}
-		}
-
-		private void AddNewRowBtnClick(object sender, EventArgs e)
-		{
-			this.songsDataGridView.Rows.Add();
-		}
-
-		private void DeleteRowBtnClick(object sender, EventArgs e)
-		{
-			if (songsDataGridView.SelectedRows.Count > 0 && songsDataGridView.SelectedRows[0].Index != songsDataGridView.Rows.Count - 1)
-			{
-				songsDataGridView.Rows.RemoveAt(songsDataGridView.SelectedRows[0].Index);
-			}
-		}
-
-		// 格式化列表单元格
-		private void CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e == null || e.Value == null)
-			{
-				return;
-			}
-			if (songsDataGridView.Columns[e.ColumnIndex].Name == "Release Date")
-			{
-				try
-				{
-					e.Value = DateTime.Parse(e.Value.ToString()).ToLongDateString();
-					e.FormattingApplied = true;
-
-					// 向单元格添加工具提示
-					DataGridViewCell cell = songsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-					cell.ToolTipText = "Show me the money";
-				}
-				catch (Exception)
-				{
-					Console.WriteLine("{0} is not a valid date.", e.Value.ToString());
-				}
-			}
-		}
-
-		// 检测 DataGridView 单元格的状态更改
-		private void CellStateChange(object sender, DataGridViewCellStateChangedEventArgs e)
-		{
-			// 单元格状态更改(例如单元格失去或获得焦点)时发生。
-			DataGridViewElementStates state = e.StateChanged;
-			string msg = String.Format("Row {0}, Column {1}, {2}", e.Cell.RowIndex, e.Cell.ColumnIndex, e.StateChanged);
-			MessageBox.Show(msg, "Cell State Changed");
-		}
-
-		// 检测 DataGridView 单元格的值更改
-		private void CellValueChange(object sender, DataGridViewCellEventArgs e)
-		{
-			string msg = String.Format("Cell at row {0}, column {1} value changed", e.RowIndex, e.ColumnIndex);
-			MessageBox.Show(msg, "Cell Value Changed");
 		}
 
 		#endregion
