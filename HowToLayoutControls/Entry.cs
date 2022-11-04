@@ -21,29 +21,39 @@ namespace HowToLayoutControls
 			// InitializeDomainUpDown();
 			// InitializeErrorProvider();
 			// InitializeFlowLayoutPanel();
-			InitializeAnchor();
+			// InitializeAnchor();
 		}
 
 		private void InitializeAnchor()
 		{
-			//Panel panel = new Panel();
-			//panel.Width = 400;
-			//panel.Height = 400;
-			//panel.BorderStyle = BorderStyle.FixedSingle;
-			//Button button = new Button();
-			//button.Text = "button";
-			////button.Anchor = AnchorStyles.Top;
-			//button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-			//panel.Controls.Add(button);
-			//this.Controls.Add(panel);
-
-			// Create a button and add it to the form.
 			Button button1 = new Button();
-			button1.Text = "button1";
-			// Anchor the button to the bottom right corner of the form
-			button1.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-			// Add the button to the form.
+			button1.Text = "Anchor Top";
+			button1.AutoSize = true;
+			button1.Location = new Point(0, 200);
+			button1.Anchor = AnchorStyles.Top;
+
+			Button button2 = new Button();
+			button2.Text = "Anchor Bottom";
+			button2.AutoSize = true;
+			button2.Location = new Point(0, 400);
+			button2.Anchor = AnchorStyles.Bottom;
+
+			Button button3 = new Button();
+			button3.Text = "Anchor Left";
+			button3.AutoSize = true;
+			button3.Location = new Point(400, 200);
+			button3.Anchor = AnchorStyles.Left;
+
+			Button button4 = new Button();
+			button4.Text = "Anchor Right";
+			button4.AutoSize = true;
+			button4.Location = new Point(400, 400);
+			button4.Anchor = AnchorStyles.Right;
+
 			this.Controls.Add(button1);
+			this.Controls.Add(button2);
+			this.Controls.Add(button3);
+			this.Controls.Add(button4);
 		}
 
 		private void InitializeDock()
