@@ -35,10 +35,48 @@ namespace ThreadDemo
 {
 	public partial class FrmMain : Form
 	{
+		public delegate void DelegateRun();
+
+		public delegate void DelegateEat(string food);
+
+		public delegate DateTime DelegateSleep(DateTime date);
+
 		public FrmMain()
 		{
 			InitializeComponent();
 			TestThreadingTimer();
+		}
+
+		public static void TestAction()
+		{
+			
+			Action func1 = Dog.Run;
+			// Action func2 = Dog.Eat; Action 类型的委托不接受参数，也没有返回值。
+			DelegateRun run = Dog.Run;
+			DelegateEat eat = Dog.Eat;
+			DelegateSleep sleep = Dog.Sleep;
+
+			run();
+			eat("meat");
+			sleep(DateTime.Now);
+		}
+
+		class Dog
+		{
+			public static void Run()
+			{
+				LogHelper.Log($"dog run at {DateTime.Now.ToString()}");
+			}
+
+			public static void Eat(string food)
+			{
+
+			}
+
+			public static DateTime Sleep(DateTime date)
+			{
+				return date;
+			}
 		}
 
 		public void TestThreadingTimer()
