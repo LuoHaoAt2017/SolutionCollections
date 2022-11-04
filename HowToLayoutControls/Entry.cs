@@ -26,6 +26,60 @@ namespace HowToLayoutControls
 			// InitializeFlowLayoutPanel();
 			// InitializeAnchor();
 			// InitializeTableLayoutPanel();
+			InitializeGroupBox();
+		}
+
+		private void InitializeGroupBox()
+		{
+			FlowLayoutPanel layout = new FlowLayoutPanel();
+			layout.FlowDirection = FlowDirection.TopDown;
+			layout.AutoSize = true;
+			GroupBox group1 = new GroupBox();
+			GroupBox group2 = new GroupBox();
+			group1.Text = "Group1";
+			group1.AutoSize = true;
+			group1.FlatStyle = FlatStyle.Flat;
+			group2.Text = "Group2";
+			group2.AutoSize = true;
+			group2.FlatStyle = FlatStyle.Standard;
+			string[] strs = new string[3] { "基督教", "摩尼教", "印度教" };
+			for(int i = 0; i < strs.Length; i++)
+			{
+				RadioButton radio = new RadioButton();
+				radio.Text = strs[i];
+				radio.Width = 100;
+				radio.AutoCheck = true;
+				radio.TextAlign = ContentAlignment.MiddleCenter;
+				radio.Appearance = Appearance.Button;
+				radio.Location = new Point(i * 100, 20);
+				radio.CheckedChanged += RadioCheckedChanged;
+				group1.Controls.Add(radio);
+			}
+			for (int i = 0; i < strs.Length; i++)
+			{
+				RadioButton radio = new RadioButton();
+				radio.Text = strs[i];
+				radio.Width = 100;
+				radio.AutoCheck = true;
+				radio.TextAlign = ContentAlignment.MiddleCenter;
+				radio.Appearance = Appearance.Normal;
+				radio.Location = new Point(i * 100, 20);
+				radio.CheckedChanged += RadioCheckedChanged;
+				group2.Controls.Add(radio);
+			}
+			layout.Controls.Add(group1);
+			layout.Controls.Add(group2);
+			this.Controls.Add(layout);
+		}
+
+		private void RadioCheckedChanged(object sender, EventArgs e)
+		{
+			RadioButton radioButton = (RadioButton)sender;
+
+			if (radioButton.Checked == true)
+			{
+				MessageBox.Show(radioButton.Text);
+			}
 		}
 
 		private void InitializeAnchor()

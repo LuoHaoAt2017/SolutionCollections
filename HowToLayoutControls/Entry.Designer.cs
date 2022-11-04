@@ -64,6 +64,10 @@ namespace HowToLayoutControls
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.SuspendLayout();
+			// 
+			// Entry
+			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1000, 800);
