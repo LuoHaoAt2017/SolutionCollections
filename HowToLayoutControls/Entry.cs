@@ -26,7 +26,7 @@ namespace HowToLayoutControls
 			// InitializeFlowLayoutPanel();
 			// InitializeAnchor();
 			// InitializeTableLayoutPanel();
-			InitializeGroupBox();
+			// InitializeGroupBox();
 		}
 
 		private void InitializeGroupBox()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,7 +38,134 @@ namespace ThreadDemo
 		public FrmMain()
 		{
 			InitializeComponent();
-			TestTimer();
+			TestThreadingTimer();
+		}
+
+		public void TestThreadingTimer()
+		{
+			int dueTime = 1000;
+			int period = 3000;
+			FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+			Button button1 = new Button();
+			Button button2 = new Button();
+			Button button3 = new Button();
+			Button button4 = new Button();
+			Label label1 = new Label();
+			Label label2 = new Label();
+			Label label3 = new Label();
+			System.Threading.Timer timer = new System.Threading.Timer(new TimerCallback((object state) =>
+			{
+				this.Invoke(new Action(() => { label1.Text = "当前时间" + DateTime.Now.ToString();  }));
+			}), null, dueTime, period);
+
+			label1.Size = new Size(120, 40);
+			label2.Size = new Size(120, 40);
+			label3.Size = new Size(120, 40);
+
+			label1.Text = "当前时间" + DateTime.Now.ToString();
+			label2.Text = "间隔时间" + period;
+			label3.Text = "延迟时间" + dueTime;
+
+			button1.Size = new Size(120, 40);
+			button1.Text = "定时器间隔时间减小";
+			button1.Cursor = Cursors.Hand;
+
+			button2.Size = new Size(120, 40);
+			button2.Text = "定时器延迟时间减小";
+			button2.Cursor = Cursors.Hand;
+
+			button3.Size = new Size(120, 40);
+			button3.Text = "定时器暂停执行";
+			button3.Cursor = Cursors.Hand;
+
+			button4.Size = new Size(120, 40);
+			button4.Text = "定时器立即执行";
+			button4.Cursor = Cursors.Hand;
+
+			flowLayoutPanel.AutoSize = true;
+			flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
+			flowLayoutPanel.Controls.AddRange(new Control[] { label1, label2, label3, button1, button2, button3, button4 });
+
+			button1.Click += new EventHandler((object sender, EventArgs e) =>
+			{
+				this.Invoke(new Action(() => {
+					if (period > 1000)
+					{
+						period -= 1000;
+						timer.Change(dueTime, period);
+						label2.Text = "间隔时间" + period;
+						label3.Text = "延迟时间" + dueTime;
+					}
+				}));
+			});
+
+			button2.Click += new EventHandler((object sender, EventArgs e) =>
+			{
+				this.Invoke(new Action(() => {
+					if (dueTime > 1000)
+					{
+						dueTime -= 1000;
+						timer.Change(dueTime, period);
+						label2.Text = "间隔时间" + period;
+						label3.Text = "延迟时间" + dueTime;
+					}
+				}));
+			});
+
+			button3.Click += new EventHandler((object sender, EventArgs e) =>
+			{
+				this.Invoke(new Action(() => {
+					dueTime = -1;
+					period = 10000;
+					timer.Change(dueTime, period);
+					label2.Text = "间隔时间" + period;
+					label3.Text = "延迟时间" + dueTime;
+				}));
+			});
+
+			button4.Click += new EventHandler((object sender, EventArgs e) =>
+			{
+				this.Invoke(new Action(() => {
+					dueTime = 0;
+					period = 10000;
+					timer.Change(dueTime, period);
+					label2.Text = "间隔时间" + period;
+					label3.Text = "延迟时间" + dueTime;
+				}));
+			});
+
+			this.Controls.Add(flowLayoutPanel);
+		}
+
+		public void TestInvoke()
+		{
+			FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+			Button button = new Button();
+			Label label = new Label();
+			button.Size = new Size(90, 40);
+			button.Text = "显示当前时间";
+			button.Cursor = Cursors.Hand;
+			label.Size = new Size(120, 40);
+			flowLayoutPanel.AutoSize = true;
+			flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
+			flowLayoutPanel.Controls.AddRange(new Control[] { label, button });
+			button.Click += new EventHandler((object sender, EventArgs e) =>
+			{
+				Thread thread = new Thread(new ParameterizedThreadStart(ChangeLabelText));
+				thread.Name = "ChangeLabelThread";
+				thread.Start(label);
+			});
+
+			this.Controls.Add(flowLayoutPanel);
+		}
+
+		public void ChangeLabelText(object obj)
+		{
+			Label label = (Label)(obj);
+			this.Invoke(new Action(() =>
+			{
+				label.Text = DateTime.Now.ToString();
+			}));
 		}
 
 		// 线程优先级，线程调度器，线程调度队列
