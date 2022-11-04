@@ -27,6 +27,60 @@ namespace HowToLayoutControls
 			// InitializeAnchor();
 			// InitializeTableLayoutPanel();
 			// InitializeGroupBox();
+			// InitializeTabControl();
+		}
+
+		private void InitializeTabControl()
+		{
+			TabControl tabControl = new TabControl();
+			
+			TabPage page1 = new TabPage();
+			TabPage page2 = new TabPage();
+
+			page1.Size = new Size(400, 400);
+			page1.Text = "Page1";
+			page1.TabIndex = 0;
+			Button button1 = new Button();
+			button1.AutoSize = true;
+			button1.Text = "Hello World Page1";
+			AddControlIntoPage(page1, button1);
+
+			page2.Size = new Size(400, 400);
+			page2.Text = "Page2";
+			page2.TabIndex = 1;
+			Button button2 = new Button();
+			button2.AutoSize = true;
+			button2.Text = "Hello World Page2";
+			AddControlIntoPage(page2, button2);
+
+			Button button3 = new Button();
+			button3.AutoSize = true;
+			button3.Text = "Page1";
+			button3.Click += new EventHandler((object obj, EventArgs e) =>
+			{
+				tabControl.SelectedIndex = page1.TabIndex;
+			});
+
+			Button button4 = new Button();
+			button4.AutoSize = true;
+			button4.Text = "Page2";
+			button4.Click += new EventHandler((object obj, EventArgs e) =>
+			{
+				tabControl.SelectedIndex = page2.TabIndex;
+			});
+
+			//tabControl.SelectedTab = page1;
+			tabControl.Controls.AddRange(new Control[] { page1, page2 });
+			FlowLayoutPanel layoutPanel = new FlowLayoutPanel();
+			layoutPanel.FlowDirection = FlowDirection.TopDown;
+			layoutPanel.AutoSize = true;
+			layoutPanel.Controls.AddRange(new Control[] { tabControl, button3, button4 });
+			this.Controls.Add(layoutPanel);
+		}
+
+		public void AddControlIntoPage(TabPage page, Control control)
+		{
+			page.Controls.Add(control);
 		}
 
 		private void InitializeGroupBox()
