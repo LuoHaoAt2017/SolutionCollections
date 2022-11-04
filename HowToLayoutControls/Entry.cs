@@ -12,6 +12,9 @@ namespace HowToLayoutControls
 		private Panel btnPanel = new Panel();
 		private Button addNewBtn = new Button();
 		private Button deleteBtn = new Button();
+		private TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+		private int RowHeight = 40;
+		private int ColumnCount = 5;
 
 		public Entry()
 		{
@@ -22,6 +25,7 @@ namespace HowToLayoutControls
 			// InitializeErrorProvider();
 			// InitializeFlowLayoutPanel();
 			// InitializeAnchor();
+			// InitializeTableLayoutPanel();
 		}
 
 		private void InitializeAnchor()
@@ -177,7 +181,56 @@ namespace HowToLayoutControls
 
 		private void InitializeTableLayoutPanel()
 		{
+			// 通常，不应将 TableLayoutPanel 控件用作整个布局的容器。 可使用 TableLayoutPanel 控件为部分布局提供按比例调整大小的功能。
+			// TableLayoutPanel 控件的每个单元格只能包含一个子控件。
+			var RowCount = 20;
+			tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+			tableLayoutPanel.ColumnCount = ColumnCount;
+			tableLayoutPanel.Location = new Point(100, 100);
+			tableLayoutPanel.Height = tableLayoutPanel.RowCount * RowHeight; // 默认是 0 行
+			tableLayoutPanel.Dock = DockStyle.Top;
 
+			this.Controls.Add(tableLayoutPanel);
+
+			for(int i = 0; i < ColumnCount; i++)
+			{
+				tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, tableLayoutPanel.Width * 0.2f));
+			}
+			for(int j = 0; j < RowCount; j++)
+			{
+				AddTableRow(new string[5] { "apple", "orange", "banana", "casaba", "sugarcane" });
+			}
+			tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+			tableLayoutPanel.Height = tableLayoutPanel.RowCount * (RowHeight + 2 * 2);
+		}
+
+		private void AddTableRow(string[] fruits)
+		{
+			try
+			{
+				int rowIndex = tableLayoutPanel.RowCount;
+				tableLayoutPanel.RowCount++;
+				tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, RowHeight));
+				for(int colIndex = 0; colIndex < ColumnCount; colIndex++)
+				{
+					Label label = new Label();
+					label.Text = fruits[colIndex];
+					label.Dock = DockStyle.Fill;
+					label.Cursor = Cursors.Hand;
+					label.Click += new EventHandler((object sender, EventArgs args) => {
+						Label target = (Label)sender;
+						target.BackColor = Color.Orange;
+						// MessageBox.Show(target.Text);
+					});
+					label.Font = new Font("楷体", 13, FontStyle.Regular);
+					label.TextAlign = ContentAlignment.MiddleCenter;
+					tableLayoutPanel.Controls.Add(label, colIndex, rowIndex);
+				}
+			}
+			catch(Exception)
+			{
+
+			}
 		}
 
 		private void InitializeErrorProvider()
