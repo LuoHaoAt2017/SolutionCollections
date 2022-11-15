@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowToLayoutControls", "HowToLayoutControls.csproj", "{1397F541-2CF3-4A85-8035-C9A2ECF2E482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1397F541-2CF3-4A85-8035-C9A2ECF2E482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1397F541-2CF3-4A85-8035-C9A2ECF2E482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1397F541-2CF3-4A85-8035-C9A2ECF2E482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1397F541-2CF3-4A85-8035-C9A2ECF2E482}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C51C24D-7AF8-4C11-ACA0-A3776158FFA4}
+	EndGlobalSection
+EndGlobal

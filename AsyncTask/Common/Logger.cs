@@ -1,6 +1,6 @@
 ﻿using log4net;
 
-namespace DotNetADO
+namespace AsyncTask
 {
 	internal class LogHelper
 	{
