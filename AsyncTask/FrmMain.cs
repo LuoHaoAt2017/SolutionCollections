@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,25 +20,39 @@ namespace AsyncTask
 			MaxResponseContentBufferSize = 1_000_000
 		};
 
-		[DllImport("kernel32.dll")]
-		public static extern bool AllocConsole();
-
-		[DllImport("kernel32.dll")]
-		public static extern bool FreeConsole();
+		private static Stopwatch watch = new Stopwatch();
 
 		public FrmMain()
 		{
 			InitializeComponent();
 			// CombinateAsync();
-			TestCancelRequest();
+			// TestCancelRequest();
+			TestSyncTask();
 		}
 
-		// 取消运行很长时间的任务
-		public static async Task ThrowAfter(int ms, string message)
+		public static void TestSyncTask()
 		{
-			await Task.Delay(ms);
-			throw new Exception(message);
+			const int LargeNumber = 90000000;
+			watch.Start();
+			RunCpuConsumingTask(1, LargeNumber);
+			RunCpuConsumingTask(2, LargeNumber);
+			RunCpuConsumingTask(3, LargeNumber);
+			RunCpuConsumingTask(4, LargeNumber);
 		}
+
+		public static void RunCpuConsumingTask(int id, int LargeNumber)
+		{
+			for (int i = 0; i < LargeNumber; i++) ;
+			LogHelper.Log($"{id} count: {watch.Elapsed.TotalMilliseconds} ms");
+		}
+
+		public static void GetHttpResponse(int id, string url)
+		{
+			WebClient client = new WebClient();
+			LogHelper.Log($"start {id} task. count: {watch.Elapsed.TotalMilliseconds} ms");
+			client.DownloadString(new Uri(url));
+		}
+
 		// 无法获取异常
 		public static void DontHandle()
 		{
@@ -44,7 +60,7 @@ namespace AsyncTask
 			{
 				ThrowAfter(200, "first");
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				// 错误并不会被捕获
 				LogHelper.Error(ex.Message);
@@ -53,6 +69,13 @@ namespace AsyncTask
 			{
 				Console.WriteLine("try...catch...finally 执行完毕时，ThrowAfter 还没有抛出异常");
 			}
+		}
+
+		// 取消运行很长时间的任务
+		public static async Task ThrowAfter(int ms, string message)
+		{
+			await Task.Delay(ms);
+			throw new Exception(message);
 		}
 		// 获取部分异常
 		public static async void HandleError1()
@@ -158,6 +181,12 @@ namespace AsyncTask
 			});
 		}
 
+		public static string Greeting(string name)
+		{
+			Thread.Sleep(1000);
+			return name;
+		}
+
 		public static Task<bool> CongratulateAsync(bool value)
 		{
 			return Task.Run<bool>(() =>
@@ -165,12 +194,6 @@ namespace AsyncTask
 				Thread.Sleep(1500);
 				return value;
 			});
-		}
-
-		public static string Greeting(string name)
-		{
-			Thread.Sleep(1000);
-			return name;
 		}
 
 		public static void CallWithContinuationTask()
