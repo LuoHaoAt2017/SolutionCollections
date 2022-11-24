@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ConfigurationInfo>
+	<machine>
+		<designer>中船重工701研究所</designer>
+		<manufacturer>江南造船厂</manufacturer>
+		<location>
+			<province>湖北省</province>
+			<city>武汉</city>
+			<region>洪山区</region>
+		</location>
+	</machine>
+
+	<customerColumn>
+		<customerId>true</customerId>
+		<customerName>true</customerName>
+		<contactName>true</contactName>
+		<address>true</address>
+		<city>true</city>
+		<postalCode>true</postalCode>
+		<country>true</country>
+	</customerColumn>
+</ConfigurationInfo>

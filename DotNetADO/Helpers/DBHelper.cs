@@ -13,7 +13,7 @@ namespace DotNetADO.Helpers
 			DbProviderFactory factory = DbProviderFactories.GetFactory(settings.ProviderName);
 			// 根据工厂函数创建 connection 连接
 			DbConnection connection = factory.CreateConnection();
-			// server=WH1301000467;integrated security=SSPI;database=Northwind
+			// "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123";
 			connection.ConnectionString = settings.ConnectionString;
 			return connection;
 		}
