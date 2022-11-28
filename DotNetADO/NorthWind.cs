@@ -19,12 +19,26 @@ namespace DotNetADO
 			InitializeComponent();
 		}
 
-		private void NorthWindLoad(object sender, System.EventArgs e)
+		public void NorthWindLoad(object sender, System.EventArgs e)
 		{
-			LoadConfiguration();
-			SetupCustomerTable();
-			FillCustomerTable();
-			PrintCustomerTable();
+			//LoadConfiguration();
+			//SetupCustomerTable();
+			//FillCustomerTable();
+			//PrintCustomerTable();
+			TestSqlSearch();
+		}
+
+		public void TestSqlCommand()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;timeout=8";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				string sqlString = "SELECT * FROM Customers";
+				SqlCommand cmd = new SqlCommand(sqlString, connection);
+				cmd.CommandType = CommandType.Text;
+				cmd.Connection.Open();
+				cmd.ExecuteNonQuery();
+			}
 		}
 
 		public void PrintCustomerTable()
@@ -55,10 +69,7 @@ namespace DotNetADO
 		public void SetupCustomerTable()
 		{
 			// todo 反射技术
-			if (configuration.customerColumn.customerId == "true")
-			{
-				dt.Columns.Add("CustomerId", Type.GetType("System.String"));
-			}
+			
 			if (configuration.customerColumn.customerName == "true")
 			{
 				dt.Columns.Add("CustomerName", Type.GetType("System.String"));
@@ -83,6 +94,14 @@ namespace DotNetADO
 			{
 				dt.Columns.Add("Address", Type.GetType("System.String"));
 			}
+			// 设置主键
+			dt.Columns.Add("CustomerId", Type.GetType("System.String"));
+			DataColumn[] primaryKey = new DataColumn[1];
+			primaryKey[0] = dt.Columns["CustomerId"];
+			dt.PrimaryKey = primaryKey;
+			//dt.Columns["CustomerId"].AutoIncrement = true;
+			//dt.Columns["CustomerId"].AutoIncrementSeed = 1;
+			//dt.Columns["CustomerId"].ReadOnly = true;
 		}
 
 		public void LoadConfiguration()
@@ -117,6 +136,7 @@ namespace DotNetADO
 					// TestExecuteNonQueryCommand(conn);
 					// TestExecuteReaderCommand(conn);
 					// TestExecuteScalarCommand(conn);
+					TestWriteDatasetToXMLFile(conn);
 					conn.Close();
 					LogHelper.Log("数据库连接断开");
 				}
@@ -130,8 +150,13 @@ namespace DotNetADO
 
 		public static void TestExecuteNonQueryCommand(SqlConnection conn)
 		{
-			string sql = "UPDATE Customers SET ContactName = 'Bob' WHERE ContactName = 'Bill'";
+			// Yang Wang
+			string sql = "UPDATE Customers SET PostalCode = @PostalCode WHERE ContactName = @ContactName";
 			SqlCommand cmd = new SqlCommand(sql, conn);
+			//cmd.Parameters.Add(new SqlParameter("@PostalCode", SqlDbType.VarChar));
+			//cmd.Parameters.Add(new SqlParameter("@ContactName", SqlDbType.VarChar));
+			cmd.Parameters.AddWithValue("@PostalCode", "3021");
+			cmd.Parameters.AddWithValue("@ContactName", "Yang Wang");
 			// 一般用于 UPDATE, INSERT, DELETE 语句
 			int rowCount = cmd.ExecuteNonQuery();
 			LogHelper.Log($"{rowCount} rows returned");
@@ -139,13 +164,18 @@ namespace DotNetADO
 
 		public static void TestExecuteReaderCommand(SqlConnection conn)
 		{
-			string sql = "SELECT ContactName, CompanyName FROM Customers";
+			string sql = "SELECT ContactName, CustomerName FROM Customers";
 			SqlCommand cmd = new SqlCommand(sql, conn);
 			SqlDataReader reader = cmd.ExecuteReader();
-			while (reader.Read())
+			DataTable table = reader.GetSchemaTable();
+			foreach(DataRow row in table.Rows)
 			{
-				LogHelper.Log($"Contact: {reader[0]} Company: {reader[1]}");
+				LogHelper.Log($"{row[0]}-{row[1]}-{row[2]}");
 			}
+			//while (reader.Read())
+			//{
+			//	LogHelper.Log($"Contact: {reader[0]} Company: {reader[1]}");
+			//}
 		}
 
 		public static void TestExecuteScalarCommand(SqlConnection conn)
@@ -379,6 +409,102 @@ namespace DotNetADO
 				string sql = "WAITFOR DELAY '0:0:03'; SELECT COUNT(*) FROM Employees";
 				SqlCommand cmd = new SqlCommand(sql, conn);
 				return await cmd.ExecuteScalarAsync().ContinueWith(t => Convert.ToInt32(t.Result));
+			}
+		}
+
+
+		// SQL 的增删改查
+		public static void TestSqlInsert()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				SqlCommand command = connection.CreateCommand();
+				string commandText = "INSERT INTO Categories(CategoryName,Description) VALUES(@CategoryName,@Description)";
+				command.CommandText = commandText;
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@CategoryName", "Mushroom");
+				command.Parameters.AddWithValue("@Description", "菌类");
+				connection.Open();
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
+		}
+
+		public static void TestSqlDelete()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				string commandText = "DELETE FROM Categories WHERE CategoryID=@CategoryID";
+
+				SqlCommand command = new SqlCommand();
+				command.Connection = connection;
+				command.CommandText = commandText;
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@CategoryID", "1002");
+				connection.Open();
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
+		}
+
+		public static void TestSqlUpdate()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				SqlCommand command = connection.CreateCommand();
+				string commandText = "UPDATE Categories SET CategoryName=@CategoryName, Description=@Description WHERE CategoryID=@CategoryID";
+				command.CommandText = commandText;
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@CategoryID", "1");
+				command.Parameters.AddWithValue("@CategoryName", "Beverages");
+				command.Parameters.AddWithValue("@Description", "Soft drinks, coffees, teas, beers, and ales");
+				connection.Open();
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
+		}
+
+		public static void TestSqlSelect()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				SqlCommand cmd = connection.CreateCommand();
+				cmd.Connection = connection;
+				cmd.CommandText = "SELECT * FROM Categories";
+				cmd.CommandType = CommandType.Text;
+				connection.Open();
+				SqlDataReader reader = cmd.ExecuteReader();
+				DataTable table = reader.GetSchemaTable();
+				foreach(DataRow row in table.Rows)
+				{
+					LogHelper.Log($"{row[0]}-{row[1]}-{row[2]}");
+				}
+				connection.Close();
+			}
+		}
+
+		public static void TestSqlSearch()
+		{
+			string source = "server=192.168.0.193;database=northwind;uid=tomcat;pwd=LuoHao123;";
+			using (SqlConnection connection = new SqlConnection(source))
+			{
+				SqlCommand command  = connection.CreateCommand();
+				command.Connection = connection;
+				command.CommandText = "SELECT * FROM Categories";
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@CategoryName", "Tuber");
+				command.Parameters.AddWithValue("@Description", "块茎");
+				SqlDataAdapter adapter = new SqlDataAdapter(command);
+				DataSet ds = new DataSet();
+				adapter.Fill(ds, "Categories");
+				foreach(DataRow row in ds.Tables["Categories"].Rows)
+				{
+					LogHelper.Log($"CategoryID{row[0]} CategoryName {row[1]} Description {row[2]}");
+				}
 			}
 		}
 	}
