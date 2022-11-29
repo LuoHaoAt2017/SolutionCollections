@@ -18,15 +18,13 @@ using System.Threading.Tasks;
 
 namespace DotNetADO
 {
-	internal static class Program
+	class Program
 	{
 		[STAThread]
 		static void Main()
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			//TestNorthWind();
-			TestAsyncTask();
 			Application.Run(new MainForm());
 		}
 

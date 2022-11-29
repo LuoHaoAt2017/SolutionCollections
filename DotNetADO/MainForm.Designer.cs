@@ -1,4 +1,7 @@
-﻿namespace DotNetADO
+﻿using System.Data;
+using System;
+
+namespace DotNetADO
 {
 	partial class MainForm
 	{
@@ -32,6 +35,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Text = "Form1";
+			this.Load += new System.EventHandler(this.MainFormLoad);
 		}
 
 		#endregion
