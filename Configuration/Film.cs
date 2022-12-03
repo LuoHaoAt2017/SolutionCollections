@@ -17,6 +17,7 @@ namespace Configuration
 			LogHelper.Log($"designer: {configuration.machine.designer}");
 			LogHelper.Log($"manufacturer: {configuration.machine.manufacturer}");
 			LogHelper.Log($"location: {configuration.machine.location.province}-{configuration.machine.location.city}-{configuration.machine.location.region}");
+
 		}
 
 		public ConfigurationInfo GetConfigurationInfo()
