@@ -9,16 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="BarcodeLib" Version="2.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Sources\images\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update=".gitignore">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="FreeSpire.PDF" Version="8.6.0" />
+    <PackageReference Include="Spire.PDF" Version="8.11.10" />
   </ItemGroup>
 
 </Project>
