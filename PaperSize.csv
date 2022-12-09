@@ -1,0 +1,56 @@
+PaperSize,PaperSize.kind,PaperSize.name,PaperSize.width,PaperSize.height,PaperSize.createdByDefaultConstructor,PaperSize.Height,PaperSize.Kind,PaperSize.PaperName,PaperSize.RawKind,PaperSize.Width
+"[PaperSize A0 Kind=Custom Height=4681 Width=3311]",304,A0,3311,4681,False,4681,Custom,A0,304,3311
+"[PaperSize A1 Kind=Custom Height=3311 Width=2339]",305,A1,2339,3311,False,3311,Custom,A1,305,2339
+"[PaperSize A2 Kind=A2 Height=2339 Width=1654]",A2,A2,1654,2339,False,2339,A2,A2,66,1654
+"[PaperSize A3 Kind=A3 Height=1654 Width=1169]",A3,A3,1169,1654,False,1654,A3,A3,8,1169
+"[PaperSize A4 Kind=A4 Height=1169 Width=827]",A4,A4,827,1169,False,1169,A4,A4,9,827
+"[PaperSize A5 Kind=A5 Height=827 Width=583]",A5,A5,583,827,False,827,A5,A5,11,583
+"[PaperSize A6 Kind=A6 Height=583 Width=413]",A6,A6,413,583,False,583,A6,A6,70,413
+"[PaperSize B1 Kind=Custom Height=4055 Width=2866]",306,B1,2866,4055,False,4055,Custom,B1,306,2866
+"[PaperSize B2 Kind=Custom Height=2866 Width=2028]",307,B2,2028,2866,False,2866,Custom,B2,307,2028
+"[PaperSize B3 Kind=Custom Height=2028 Width=1433]",308,B3,1433,2028,False,2028,Custom,B3,308,1433
+"[PaperSize B4 Kind=B4 Height=1433 Width=1012]",B4,B4,1012,1433,False,1433,B4,B4,12,1012
+"[PaperSize B5 Kind=B5 Height=1012 Width=717]",B5,B5,717,1012,False,1012,B5,B5,13,717
+"[PaperSize B6 Kind=B6Jis Height=717 Width=504]",B6Jis,B6,504,717,False,717,B6Jis,B6,88,504
+"[PaperSize 12x18 Kind=Custom Height=1800 Width=1200]",278,12x18,1200,1800,False,1800,Custom,12x18,278,1200
+"[PaperSize 11x17 Kind=Tabloid Height=1700 Width=1100]",Tabloid,11x17,1100,1700,False,1700,Tabloid,11x17,3,1100
+"[PaperSize 8 1/2x14 Kind=Legal Height=1400 Width=850]",Legal,"8 1/2x14",850,1400,False,1400,Legal,"8 1/2x14",5,850
+"[PaperSize 8 1/2x11 Kind=Letter Height=1100 Width=850]",Letter,"8 1/2x11",850,1100,False,1100,Letter,"8 1/2x11",1,850
+"[PaperSize 7 1/4x10 1/2 Kind=Executive Height=1050 Width=725]",Executive,"7 1/4x10 1/2",725,1050,False,1050,Executive,"7 1/4x10 1/2",7,725
+"[PaperSize 5 1/2x8 1/2 Kind=Statement Height=850 Width=550]",Statement,"5 1/2x8 1/2",550,850,False,850,Statement,"5 1/2x8 1/2",6,550
+"[PaperSize 8K Kind=Custom Height=1535 Width=1063]",273,8K,1063,1535,False,1535,Custom,8K,273,1063
+"[PaperSize 16K Kind=Custom Height=1063 Width=768]",274,16K,768,1063,False,1063,Custom,16K,274,768
+"[PaperSize 明信片 Kind=JapanesePostcard Height=583 Width=394]",JapanesePostcard,明信片,394,583,False,583,JapanesePostcard,明信片,43,394
+"[PaperSize 4x6 Postcard Kind=Custom Height=600 Width=400]",281,"4x6 Postcard",400,600,False,600,Custom,"4x6 Postcard",281,400
+"[PaperSize 信封 Com10 Kind=Number10Envelope Height=950 Width=413]",Number10Envelope,"信封 Com10",413,950,False,950,Number10Envelope,"信封 Com10",20,413
+"[PaperSize 信封 B5 Kind=B5Envelope Height=984 Width=693]",B5Envelope,"信封 B5",693,984,False,984,B5Envelope,"信封 B5",34,693
+"[PaperSize 信封 DL Kind=DLEnvelope Height=866 Width=433]",DLEnvelope,"信封 DL",433,866,False,866,DLEnvelope,"信封 DL",27,433
+"[PaperSize 信封 Monarch Kind=MonarchEnvelope Height=750 Width=387]",MonarchEnvelope,"信封 Monarch",387,750,False,750,MonarchEnvelope,"信封 Monarch",37,387
+"[PaperSize 信封 C4 Kind=C4Envelope Height=1276 Width=902]",C4Envelope,"信封 C4",902,1276,False,1276,C4Envelope,"信封 C4",30,902
+"[PaperSize 信封 C5 Kind=C5Envelope Height=902 Width=638]",C5Envelope,"信封 C5",638,902,False,902,C5Envelope,"信封 C5",28,638
+"[PaperSize 信封 C6 Kind=C6Envelope Height=638 Width=449]",C6Envelope,"信封 C6",449,638,False,638,C6Envelope,"信封 C6",31,449
+"[PaperSize 信封 Yougata3 Kind=Custom Height=583 Width=386]",314,"信封 Yougata3",386,583,False,583,Custom,"信封 Yougata3",314,386
+"[PaperSize 信封 Yougata4 Kind=JapaneseEnvelopeYouNumber4 Height=925 Width=413]",JapaneseEnvelopeYouNumber4,"信封 Yougata4",413,925,False,925,JapaneseEnvelopeYouNumber4,"信封 Yougata4",91,413
+"[PaperSize 信封 Nagagata3 Kind=JapaneseEnvelopeChouNumber3 Height=925 Width=472]",JapaneseEnvelopeChouNumber3,"信封 Nagagata3",472,925,False,925,JapaneseEnvelopeChouNumber3,"信封 Nagagata3",73,472
+"[PaperSize 信封 Nagagata4 Kind=JapaneseEnvelopeChouNumber4 Height=807 Width=354]",JapaneseEnvelopeChouNumber4,"信封 Nagagata4",354,807,False,807,JapaneseEnvelopeChouNumber4,"信封 Nagagata4",74,354
+"[PaperSize 信封 Kakugata1 Kind=Custom Height=1504 Width=1063]",315,"信封 Kakugata1",1063,1504,False,1504,Custom,"信封 Kakugata1",315,1063
+"[PaperSize 信封 Kakugata2 Kind=JapaneseEnvelopeKakuNumber2 Height=1307 Width=945]",JapaneseEnvelopeKakuNumber2,"信封 Kakugata2",945,1307,False,1307,JapaneseEnvelopeKakuNumber2,"信封 Kakugata2",71,945
+"[PaperSize 信封 Kakugata3 Kind=JapaneseEnvelopeKakuNumber3 Height=1091 Width=850]",JapaneseEnvelopeKakuNumber3,"信封 Kakugata3",850,1091,False,1091,JapaneseEnvelopeKakuNumber3,"信封 Kakugata3",72,850
+"[PaperSize 8x13 Kind=Custom Height=1300 Width=800]",271,8x13,800,1300,False,1300,Custom,8x13,271,800
+"[PaperSize 8 1/4x13 Kind=Custom Height=1300 Width=825]",282,"8 1/4x13",825,1300,False,1300,Custom,"8 1/4x13",282,825
+"[PaperSize 8 1/2x13 Kind=Folio Height=1300 Width=850]",Folio,"8 1/2x13",850,1300,False,1300,Folio,"8 1/2x13",14,850
+"[PaperSize 8 1/2x13 1/2 Kind=Custom Height=1350 Width=850]",295,"8 1/2x13 1/2",850,1350,False,1350,Custom,"8 1/2x13 1/2",295,850
+"[PaperSize 8 1/8x13 1/4 Kind=Custom Height=1325 Width=813]",283,"8 1/8x13 1/4",813,1325,False,1325,Custom,"8 1/8x13 1/4",283,813
+"[PaperSize 220mmx330mm Kind=Custom Height=1299 Width=866]",280,220mmx330mm,866,1299,False,1299,Custom,220mmx330mm,280,866
+"[PaperSize A3W Kind=Custom Height=1654 Width=1169]",504,A3W,1169,1654,False,1654,Custom,A3W,504,1169
+"[PaperSize A4W Kind=Custom Height=1169 Width=827]",284,A4W,827,1169,False,1169,Custom,A4W,284,827
+"[PaperSize A5W Kind=Custom Height=827 Width=583]",285,A5W,583,827,False,827,Custom,A5W,285,583
+"[PaperSize B4W Kind=Custom Height=1433 Width=1012]",286,B4W,1012,1433,False,1433,Custom,B4W,286,1012
+"[PaperSize B5W Kind=Custom Height=1012 Width=717]",287,B5W,717,1012,False,1012,Custom,B5W,287,717
+"[PaperSize 11x17W Kind=Custom Height=1700 Width=1100]",288,11x17W,1100,1700,False,1700,Custom,11x17W,288,1100
+"[PaperSize 8 1/2x11W Kind=Custom Height=1100 Width=850]",290,"8 1/2x11W",850,1100,False,1100,Custom,"8 1/2x11W",290,850
+"[PaperSize 5 1/2x8 1/2W Kind=Custom Height=850 Width=550]",291,"5 1/2x8 1/2W",550,850,False,850,Custom,"5 1/2x8 1/2W",291,550
+"[PaperSize A4索引 Kind=Custom Height=1169 Width=888]",500,A4索引,888,1169,False,1169,Custom,A4索引,500,888
+"[PaperSize 8 1/2x11索引 Kind=Custom Height=1100 Width=911]",499,"8 1/2x11索引",911,1100,False,1100,Custom,"8 1/2x11索引",499,911
+"[PaperSize SRA3 Kind=Custom Height=1772 Width=1260]",494,SRA3,1260,1772,False,1772,Custom,SRA3,494,1260
+"[PaperSize 自定义尺寸 Kind=Custom Height=1169 Width=827]",256,自定义尺寸,827,1169,False,1169,Custom,自定义尺寸,256,827
