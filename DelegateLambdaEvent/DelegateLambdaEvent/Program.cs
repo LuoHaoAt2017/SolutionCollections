@@ -15,13 +15,13 @@ public class Program
     public event CustomDelegate? CustomSingleClickEvent;
 
     public event CustomDelegate? CustomDoubleClickEvent;
-
+                
     public static void Main()
     {
         // 将方法 Print 作为参数传递给方法 Calculate。
         // Calculate(1, 1, Print);
 
-        Test5();
+        Test6();
 
         Console.ReadLine();
     }
@@ -86,6 +86,63 @@ public class Program
         ProcessAndDisplay(action2, 2, 3);
     }
 
+    public static void Test6()
+    {
+        List<Emploee> emploees = new List<Emploee>(3)
+        {
+            new Emploee("tom", 1200),
+            new Emploee("jim", 1500),
+            new Emploee("cat", 1000),
+        };
+        BubbleSort(emploees, Emploee.compareTo);
+        foreach (Emploee emploee in emploees)
+        {
+            Console.WriteLine(emploee.ToString());
+        }
+    }
+
+    public delegate bool CompareToDelegate<T>(T elem1, T elem2);
+
+    public static void BubbleSort<T>(T[] sortArray, CompareToDelegate<T> compareTo)
+    {
+        bool swapped = false;
+        do
+        {
+            swapped = false;
+            for (int i = 0; i < sortArray.Length - 1; i++)
+            {
+                if (compareTo(sortArray[i], sortArray[i + 1]) == true)
+                {
+                    T temp = sortArray[i];
+                    sortArray[i] = sortArray[i+1];
+                    sortArray[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+        while (swapped);
+    }
+
+    public static void BubbleSort<T>(List<T> sortArray, Func<T, T, bool> compareTo)
+    {
+        bool swapped = false;
+        do
+        {
+            swapped = false;
+            for (int i = 0; i < sortArray.Count - 1; i++)
+            {
+                if (compareTo(sortArray[i], sortArray[i + 1]) == true)
+                {
+                    T temp = sortArray[i];
+                    sortArray[i] = sortArray[i + 1];
+                    sortArray[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+        while (swapped);
+    }
+
     public static double SquareX(double x)
     {
         return x * x;
@@ -138,5 +195,29 @@ public class Program
     public static void ProcessAndDisplay(Action<double, double> action, double value1, double value2)
     {
         action.Invoke(value1, value2);
+    }
+}
+
+public class Emploee
+{
+    public int salary;
+
+    public string name;
+
+    public Emploee(string name, int salary)
+    {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    override
+    public string ToString()
+    {
+        return($"name: {name}, salary:{salary}");
+    }
+
+    public static bool compareTo(Emploee emploee1, Emploee emploee2)
+    {
+        return emploee1.salary > emploee2.salary;
     }
 }
