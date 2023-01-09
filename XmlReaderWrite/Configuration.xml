@@ -1,0 +1,8 @@
+﻿<Root>
+	<DB>
+		<SQLServer Server="127.0.0.1" DBName="SQLServer" DBUser="SQLServer" DBPwd="SQLServer" />
+		<Oracle Server="127.0.0.1" DBName="Oracle" DBUser="Oracle" DBPwd="Oracle" />
+		<MySql Server="127.0.0.1" DBName="MySql" DBUser="MySql" DBPwd="MySql" />
+	</DB>
+	<DBType Default="SQLServer" />
+</Root>
