@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="bookstore.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Configuration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
